@@ -2,6 +2,7 @@
 
 import { motion, useAnimation } from "motion/react";
 import type { Variants } from "motion/react";
+import { useEffect } from "react";
 
 interface AtomProps extends React.SVGAttributes<SVGSVGElement> {
   width?: number;
@@ -34,8 +35,6 @@ const orbitVariants: Variants = {
   },
 };
 
-
-
 const Atom = ({
   width = 28,
   height = 28,
@@ -44,14 +43,10 @@ const Atom = ({
   ...props
 }: AtomProps) => {
   const controls = useAnimation();
-
-function spinAtom(): void {
-  while (true) {
-    controls.start('animate');
-    controls.start('normal');
-  }
-}
-
+  let flag: boolean = true;
+  useEffect(()=> {
+    controls.start("animate");
+  }, []) /* run effect every render or if included with array of dependencies, depending on as many times as the item renders, if array empty, render once */
   return (
     <div
       style={{
@@ -62,6 +57,11 @@ function spinAtom(): void {
         alignItems: "center",
         justifyContent: "center",
       }}
+      onClick={() => {
+        if (flag) {flag = false; controls.start("normal");}
+        else {flag = true; controls.start("animate");}
+      }
+    }
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
