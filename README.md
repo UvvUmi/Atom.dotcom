@@ -1,10 +1,5 @@
-MONETIZATION
-THEMES
-LANG
 AUTO EMAIL
 SAFEDELETE
-ADVERTISMENTS
 Gravatars
-Categories page
-Category page
+Threads Page
 Threads
