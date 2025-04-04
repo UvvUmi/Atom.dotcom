@@ -5,3 +5,6 @@ AUTO EMAIL
 SAFEDELETE
 ADVERTISMENTS
 Gravatars
+Categories page
+Category page
+Threads
