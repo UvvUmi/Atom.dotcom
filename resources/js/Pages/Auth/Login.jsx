@@ -48,7 +48,7 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData('email', e.target.value)}
                     />
                     {errors.email? 
-                    <InputError message={Cookies.get('language') === 'lt' ? 'Neteisingas el. paštas' : 'Incorrect email' } className="mt-2" />
+                    <InputError message={Cookies.get('language') === 'lt' ? 'Neteisingas el. paštas' : errors.email } className="mt-2" />
                     : null}
                 </div>
 
@@ -65,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData('password', e.target.value)}
                     />
                     {errors.password ? 
-                    <InputError message={Cookies.get('language') === 'lt' ? "Neteisingas slaptažodis" : "Incorrect password"} className="mt-2" />
+                    <InputError message={Cookies.get('language') === 'lt' ? "Neteisingas slaptažodis" : errors.password} className="mt-2" />
                     : null}
                 </div>
 
