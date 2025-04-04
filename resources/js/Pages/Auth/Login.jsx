@@ -44,6 +44,7 @@ export default function Login({ status, canResetPassword }) {
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        placeholder="example@example.com"
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -60,6 +61,7 @@ export default function Login({ status, canResetPassword }) {
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        placeholder="**********"
                     />
 
                     <InputError message={errors.password} className="mt-2" />
@@ -83,7 +85,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4 flex items-center justify-end">
                     <Link 
                         href={route('register')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#334155] focus:ring-offset-2"
                     >Not registered?</Link>
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in

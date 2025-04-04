@@ -2,7 +2,8 @@
 
 import { motion, useAnimation } from "motion/react";
 import type { Variants } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 interface AtomProps extends React.SVGAttributes<SVGSVGElement> {
   width?: number;
@@ -43,10 +44,21 @@ const Atom = ({
   ...props
 }: AtomProps) => {
   const controls = useAnimation();
-  let flag: boolean = true;
-  useEffect(()=> {
-    controls.start("animate");
-  }, []) /* run effect every render or if included with array of dependencies, depending on as many times as the item renders, if array empty, render once */
+
+  const [flag, setFlag] = useState<boolean>(() => {
+    const cValue = Cookies.get("atom-spin");
+    return cValue === "0";
+  })
+
+  useEffect(() => {
+    if (flag) {
+      controls.start("normal");
+    } else {
+      controls.start("animate");
+    }
+  }, [flag, controls]);
+
+ /* run effect every render or if included with array of dependencies, depending on as many times as the item renders, if array empty, render once */
   return (
     <div
       style={{
@@ -58,8 +70,15 @@ const Atom = ({
         justifyContent: "center",
       }}
       onClick={() => {
-        if (flag) {flag = false; controls.start("normal");}
-        else {flag = true; controls.start("animate");}
+        if (flag) {
+          controls.start("animate");
+          setFlag(false);
+          Cookies.set("atom-spin", "1", {expires: 14});
+        } else {
+          controls.start("normal");
+          setFlag(true);
+          Cookies.set("atom-spin", "0", {expires: 14});
+        }
       }
     }
     >

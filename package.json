@@ -10,6 +10,7 @@
         "@inertiajs/react": "^2.0.0",
         "@tailwindcss/forms": "^0.5.3",
         "@tailwindcss/vite": "^4.0.0",
+        "@types/js-cookie": "^3.0.6",
         "@types/react": "^19.0.12",
         "@types/react-dom": "^19.0.4",
         "@vitejs/plugin-react": "^4.2.0",
@@ -25,6 +26,7 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "js-cookie": "^3.0.5",
         "motion": "^12.6.2",
         "styled-components": "^6.1.16"
     }

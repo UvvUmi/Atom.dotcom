@@ -39,11 +39,17 @@ const LanguageMenu = ({
   ...props
 }: GlobeProps) => {
   const controls = useAnimation();
-  const [isLangOpen, setIsLangOpen] = useState(false); /*current state, function to set it's state = init cur state*/
-  function toggleLangMenu() {
-    if (!isLangOpen) {setIsLangOpen(true);}
-    else {setIsLangOpen(false);}
+  let [menu, setMenu] = useState<boolean>(()=> {
+    return false;
+  });
+  function toggleMenu() {
+    if (menu) {
+      setMenu(false);
+    } else {
+      setMenu(true);
+    }
   }
+  
   return (
     <div
       style={{
@@ -54,6 +60,7 @@ const LanguageMenu = ({
         alignItems: "center",
         justifyContent: "center",
       }}
+      onClick={()=>{toggleMenu()}}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +72,6 @@ const LanguageMenu = ({
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
-        onMouseDown={() => toggleLangMenu()}
         {...props}
       >
         <motion.circle
@@ -90,11 +96,14 @@ const LanguageMenu = ({
         />
       </svg>
 
-      <div className="relative text-white">
-        <span onMouseDown={() => toggleLangMenu()}>English</span>
-        {isLangOpen && (<div className="absolute">Lietuvių</div>)}
+      <div className="relative text-white" >
+      <span>English</span>
+        {menu ? <div className="absolute">
+          <span>Lietuvių</span>
+        </div> : null}
       </div>
       
+
     </div>
   );
 };

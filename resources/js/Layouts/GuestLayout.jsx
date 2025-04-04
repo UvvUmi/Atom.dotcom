@@ -3,6 +3,8 @@ import { Atom }  from '@/Components/Atom.tsx';
 import CookieNotice from '@/Components/CookieNotice';
 import CurrentYear from '@/Components/CurrentYear';
 import { LanguageMenu } from '@/Components/LanguageMenu';
+import Cookies from 'js-cookie';
+
 
 export default function GuestLayout({ children }) {
     return (
@@ -17,10 +19,12 @@ export default function GuestLayout({ children }) {
                 {children}
             </div>
 
-            <div className='text-white italic opacity-75 mt-3'><a href="https://github.com/UvvUmi" target="_blank">&copy;Daniilas Komogorcevas <CurrentYear/></a></div>
+            <div className='text-white italic opacity-75 mt-3'><a href="https://github.com/UvvUmi" target="_blank">&copy; Daniilas Komogorcevas <CurrentYear/></a></div>
         
-            <div className='fixed bottom-3 right-3'><CookieNotice/></div>
-            
+            <div className='fixed bottom-3 right-3'>
+                {Cookies.get("cookies") === "1" ? null : <CookieNotice/>}
+            </div>
         </div>
+
     );
 }

@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Hamster from './Hamster';
 import {useState } from 'react';
+import Cookies from 'js-cookie';
 
 function closeNotice() {
-    document.querySelector(".cookie-card").style.display = 'none';
+  //@ts-ignore
+    const notice = document.querySelector(".cookie-card").style.display = 'none';
+    Cookies.set('cookies', "1", {expires: 14});
 }
 
 const CookieNotice = () => {
@@ -14,7 +17,7 @@ const CookieNotice = () => {
         <span className="title">🍪 Cookie Notice</span>
         <p className="description">By continuing to browse this site, you agree to our use of cookies.</p>
         <div className="actions">
-          <button className="accept" onClick={closeNotice}>
+          <button className="accept" onClick={() => {closeNotice();}}>
             Accept
           </button>
         </div>
