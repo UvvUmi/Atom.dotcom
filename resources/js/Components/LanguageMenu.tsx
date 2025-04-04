@@ -3,6 +3,8 @@
 import type { Transition, Variants } from "motion/react";
 import { motion, useAnimation } from "motion/react";
 import { useState } from "react";
+import Cookies from 'js-cookie';
+import { languages } from "../../../vendor/filp/whoops/src/Whoops/Resources/js/prism";
 
 interface GlobeProps extends React.SVGAttributes<SVGSVGElement> {
   width?: number;
@@ -49,7 +51,18 @@ const LanguageMenu = ({
       setMenu(true);
     }
   }
-  
+
+  function changeLanguage() {
+    let langChoice = document.getElementById('langSelector')?.innerHTML;
+    if (langChoice === "Lietuvių") {
+      Cookies.set('language', 'lt', {expires: 14});
+    } else {
+      Cookies.set('language', 'eng', {expires: 14});
+    }
+    //alert(langChoice);
+    window.location.reload();
+  }
+
   return (
     <div
       style={{
@@ -96,10 +109,10 @@ const LanguageMenu = ({
         />
       </svg>
 
-      <div className="relative text-white" >
-      <span>English</span>
+      <div className="relative text-white">
+      <span>{Cookies.get('language') === 'lt' ? 'Lietuvių' : 'English'}</span>
         {menu ? <div className="absolute">
-          <span>Lietuvių</span>
+          <span id="langSelector" onClick={()=>{changeLanguage()}}>{Cookies.get('language') === 'lt' ? 'English' : "Lietuvių"}</span> 
         </div> : null}
       </div>
       

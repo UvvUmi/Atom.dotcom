@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import Cookies from 'js-cookie';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -23,11 +24,11 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title={Cookies.get('language') === "lt" ? "Registruotis" : "Register"} />
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value={Cookies.get('language') === 'lt' ? "Vardas" : "Name"} />
 
                     <TextInput
                         id="name"
@@ -38,14 +39,13 @@ export default function Register() {
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
-                        placeholder="user_name"
                     />
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value={Cookies.get('language') === 'lt' ? "El. Paštas": "Email"}/>
 
                     <TextInput
                         id="email"
@@ -56,14 +56,13 @@ export default function Register() {
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
-                        placeholder="example@example.com"
                     />
 
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value={Cookies.get('language') === 'lt' ? "Slaptažodis": "Password"} />
 
                     <TextInput
                         id="password"
@@ -74,7 +73,6 @@ export default function Register() {
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
-                        placeholder="***********"
                     />
 
                     <InputError message={errors.password} className="mt-2" />
@@ -83,7 +81,7 @@ export default function Register() {
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value={Cookies.get('language') === 'lt' ? "Patvirtinkite slaptažodį" : "Confirm Password"}
                     />
 
                     <TextInput
@@ -97,7 +95,6 @@ export default function Register() {
                             setData('password_confirmation', e.target.value)
                         }
                         required
-                        placeholder="***********"
                     />
 
                     <InputError
@@ -111,11 +108,11 @@ export default function Register() {
                         href={route('login')}
                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#334155] focus:ring-offset-2"
                     >
-                        Already registered?
+                        {Cookies.get('language') === "lt" ? "Turite paskyrą?" : "Already registered?"}
                     </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
+                    {Cookies.get('language') === "lt" ? "Registruotis" : "Register"}
                     </PrimaryButton>
                 </div>
             </form>
