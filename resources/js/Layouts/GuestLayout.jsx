@@ -19,7 +19,7 @@ export default function GuestLayout({ children }) {
                 {children}
             </div>
 
-            <div className='text-white opacity-75 mt-3'><a href="https://github.com/UvvUmi" target="_blank">&copy; Daniilas Komogorcevas <CurrentYear/></a></div>
+            <div className='text-white opacity-75 mt-3 mb-3'><a href="https://github.com/UvvUmi" target="_blank">&copy; Daniilas Komogorcevas <CurrentYear/></a></div>
         
             <div className='fixed bottom-3 right-3'>
                 {Cookies.get("cookies") === "1" ? null : <CookieNotice/>}

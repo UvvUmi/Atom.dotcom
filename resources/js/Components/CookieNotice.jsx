@@ -15,7 +15,7 @@ const CookieNotice = () => {
     <StyledWrapper>
       <div className="cookie-card">
         <span className="title">🍪 {Cookies.get('language') === 'lt' ? "Informacija dėl slapukų" : "Cookie Notice"}</span>
-        <p className="description">{Cookies.get('language') === 'lt' ? "Naršydami svetainėje toliau, Jūs sutinkate su mūsų slapukų politika" : "By continuing to browse this site, you agree to our use of cookies"}.</p>
+        <p className="description">{Cookies.get('language') === 'lt' ? "Naršydami svetainėje toliau, Jūs sutinkate su mūsų slapukų politika" : "By continuing to browse this website, you agree to our use of cookies"}.</p>
         <div className="actions">
           <button className="accept" onClick={() => {closeNotice();}}>
             {Cookies.get('language') === 'lt' ? "Supratau" : "Accept"}

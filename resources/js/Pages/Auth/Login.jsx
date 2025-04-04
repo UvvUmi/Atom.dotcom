@@ -47,8 +47,9 @@ export default function Login({ status, canResetPassword }) {
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
+                    {errors.email? 
+                    <InputError message={Cookies.get('language') === 'lt' ? 'Neteisingas el. paštas' : 'Incorrect email' } className="mt-2" />
+                    : null}
                 </div>
 
                 <div className="mt-4">
@@ -63,8 +64,9 @@ export default function Login({ status, canResetPassword }) {
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password ? 
+                    <InputError message={Cookies.get('language') === 'lt' ? "Neteisingas slaptažodis" : "Incorrect password"} className="mt-2" />
+                    : null}
                 </div>
 
                 <div className="mt-4 block">
