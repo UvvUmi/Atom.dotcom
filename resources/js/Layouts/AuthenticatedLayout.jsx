@@ -16,7 +16,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
-            <nav className="dark:bg-gradient-to-br from-[#0f172a]  to-[#334155] sticky top-0 z-50">
+            <nav className="dark:bg-gradient-to-br from-[#0f172a]  to-[#334155] sticky top-0 z-50 border-b-2 border-groove border-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 justify-between">
 

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Thread;
+use App\Http\Controllers\ThreadController;
 
 // Route::get('/', function () {
 //     // return Inertia::render('Welcome', [
@@ -14,9 +16,9 @@ use Inertia\Inertia;
 //     // ]);
 //     return redirect('dashboard');
 // });
-
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    $threads = Thread::with(['user'])->paginate(25);
+    return Inertia::render('Dashboard', ['threads' => $threads]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

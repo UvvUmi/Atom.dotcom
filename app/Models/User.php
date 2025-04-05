@@ -40,6 +40,10 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    protected $dates = ['deleted_at'];
+
+    
     protected function casts(): array
     {
         return [
