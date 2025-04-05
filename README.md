@@ -1,5 +1,5 @@
 AUTO EMAIL
 SAFEDELETE
 Gravatars
-Threads Page
-Threads
+Threads dashboard
+Threads with images, comments, topic, subtopic and content

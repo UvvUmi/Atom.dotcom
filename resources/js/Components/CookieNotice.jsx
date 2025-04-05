@@ -18,7 +18,7 @@ const CookieNotice = () => {
         <p className="description">{Cookies.get('language') === 'lt' ? "Naršydami svetainėje toliau, Jūs sutinkate su mūsų slapukų politika" : "By continuing to browse this website, you agree to our use of cookies"}.</p>
         <div className="actions">
           <button className="accept" onClick={() => {closeNotice();}}>
-            {Cookies.get('language') === 'lt' ? "Supratau" : "Accept"}
+            {Cookies.get('language') === 'lt' ? "Supratau" : "Understood"}
           </button>
         </div>
       </div>
