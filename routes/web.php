@@ -17,7 +17,7 @@ use App\Http\Controllers\ThreadController;
 //     return redirect('dashboard');
 // });
 Route::get('/', function () {
-    $threads = Thread::with(['user'])->paginate(25);
+    $threads = Thread::with(['user'])->paginate(9);
     return Inertia::render('Dashboard', ['threads' => $threads]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

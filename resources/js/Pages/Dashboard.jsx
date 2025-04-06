@@ -1,21 +1,41 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import {Link} from '@inertiajs/react';
 
-export default function Dashboard() {
+export default function Dashboard({threads}) {
+    useEffect(()=> {
+        console.log(threads.data);
+        console.log(threads);
+    }, [threads]);
     return (
         <AuthenticatedLayout>
-        <div className="row flex justify-center">
-            <div className="card" style={{width: '18rem', margin: '30px'}}>
-                <img className="card-img-top" src="..." alt="Card image cap"/>
-                <div className="card-body">
-                    <h5 className="card-title">Card title</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                </div>
+        {threads.data.length === 0 ? <div>JSON is empty</div> : <div className="text-white">NOT EMPTY({threads.data.length} rows)</div>}
+        {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">OOOPS!<br/>Nothing to show here</div> :
+            <div className="row flex justify-center flex-wrap">
+                {threads.data.map(thread => (
+                        <div className="card w-[18rem] m-[30px]" key={thread.id}>
+                            <img className="card-img-top" src="..." alt="Card image cap"/>
+                            <div className="card-body">
+                                <h5 className="card-title">{thread.title}</h5>
+                                <p className="card-text">{thread.content}</p>
+                                <a href="#" className="btn btn-primary">Visit Thread</a>
+                            </div>
+                        </div>
+                ))};
             </div>
-        </div>
-
+        }
+        <nav className="flex justify-center pb-3">
+            <ul className="pagination justify-content-end">
+                {threads.links.map((link, index) => (
+                    <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
+                        {index === 0 ? '←' : index === threads.links.length - 1 ? '→'
+                        : link.label}
+                    </a></li>
+                ))};
+            </ul>
+        </nav> 
             <Head title={Cookies.get('language') === 'lt' ? "Temos" : "Threads"} />
         </AuthenticatedLayout>
     );
