@@ -1,6 +1,6 @@
-User profile avatar or default if not set custom
-Threads dashboard
-Threads with topic, images, content and comments
-Create thread
-Make threads editable and comments too
-Pagination
+Search by keywords
+User upload and use avatar or set default(gravatar or something)
+Customize cards
+Specific Threads with topic, images, content and comments
+User Create thread/comments
+Threads/comments editable, removable only by author

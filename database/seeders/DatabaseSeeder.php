@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,5 +20,13 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ThreadSeeder::class);
         $this->call(CommentSeeder::class);
+
+        DB::table('users')->insert([
+            'name' => 'Lola',
+            'email' => 'lola@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password321'),
+            'remember_token' => Str::random(10),
+        ]);
     }
 }
