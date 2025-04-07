@@ -48,7 +48,8 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
+            <a className="text-metroAlert" href={route('dashboard')}>← {Cookies.get('language') === 'lt' ? 'Atgal' : 'Back'}</a>
+                <h2 className="text-lg mt-3 font-medium text-gray-900">
                     {Cookies.get('language') === 'lt' ? "Atnaujinti slaptažodį" : "Update Password"}
                 </h2>
 
