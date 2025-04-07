@@ -16,7 +16,16 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors:{
+            transparent: '#FFFFFF1C',
+            micronesia: 'rgba(0, 207, 255, 0.2)',
+            micronesiaOpaque: 'rgba(0, 207, 255, 1)',
+            metroAlert: '#F45E5E',
+            alertTransparent: 'rgba(244, 94, 94, 0.3)',
+            atom: '#1F2937',
+        },
     },
+
 
     plugins: [forms],
     purge: 'false',

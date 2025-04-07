@@ -24,15 +24,21 @@ export default function AuthenticatedLayout({ header, children }) {
                             <div className="flex shrink-0 items-center">
                                 <Atom className="block h-12 w-auto" />
                             </div>
-                            <div className='text-white font-bold ms-3 items-center flex cursor-pointer'><a href={route('dashboard')}>
+                            <div className='hidden md:flex text-white font-bold ms-3 items-center cursor-pointer'><a href={route('dashboard')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-house-fill" viewBox="0 0 16 16">
                                 <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
                                 <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/></svg></a>
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            
+                        <div className="hidden md:flex text-white items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-chat-square-dots-fill me-1" viewBox="0 0 16 16">
+                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                            </svg>
+                            Create thread
+                        </div>
+
+                        <div className="hidden sm:ms-3 sm:flex sm:items-center">
                             <div><LanguageMenu/></div>
                             <div className="relative ms-3">
                                 <Dropdown>
@@ -65,6 +71,11 @@ export default function AuthenticatedLayout({ header, children }) {
                                             href={route('profile.edit')}
                                         >
                                             {Cookies.get("language") === "lt" ? "Paskyra" : "Profile"}
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route('profile.edit')}
+                                        >
+                                            {Cookies.get("language") === "lt" ? "Kurti įrašą" : "Create thread"}
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('dashboard')}
@@ -131,17 +142,27 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
+                    <div className="space-y-1 pb-3 pt-2 text-micronesiaOpaque">
                         <ResponsiveNavLink
                             href={route('profile.edit')}
                             active={route().current('dashboard')}
+                            className=" bg-micronesia"
                         >{user.name}
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="pb-3 border-t border-gray-200">
+                    <div className="pb-3 border-t border-white">
                         <div className="flex w-full items-start py-1 pe-4">
                             <LanguageMenu/>
+                        </div>
+                        <div className="mt-2">
+                            <ResponsiveNavLink
+                                method="get"
+                                href={route('dashboard')}
+                                as="button"
+                                className="text-white">
+                                {Cookies.get('language') === "lt" ? "Kurti įrašą" : "Create thread"}
+                            </ResponsiveNavLink>
                         </div>
                         <div className="mt-2">
                             <ResponsiveNavLink
@@ -152,12 +173,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                 {Cookies.get('language') === "lt" ? "Pagrindinis" : "Homepage"}
                             </ResponsiveNavLink>
                         </div>
-                        <div className="mt-2">
+                        <div className="mt-2 text-metroAlert">
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
-                                className="text-white">
+                                className="bg-alertTransparent"
+                                >
                                 {Cookies.get('language') === "lt" ? "Atsijungti" : "Log Out"}
                             </ResponsiveNavLink>
                         </div>
