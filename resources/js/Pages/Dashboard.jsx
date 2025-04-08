@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
@@ -33,7 +33,7 @@ export default function Dashboard({threads}) {
                             <div className="card-body">
                                 <h5 className="card-title">{thread.title}</h5>
                                 <p className="card-text">{thread.content}</p>
-                                <a href="#" className="btn btn-primary">Visit Thread</a>
+                                <Link href={route('thread', thread.id)} className="btn btn-primary">Visit Thread</Link>
                                 <p>By {thread.user.name}</p>
                             </div>
                         </div>

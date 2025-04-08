@@ -2,5 +2,5 @@
 -Threads/comments editable, removable only by author
 -Specific Threads with topic, images, content and comments
 -User upload and use avatar or set default(gravatar or something)
--Customize cards
--Search by keywords
+-Customize cards/overlay
+-Filters
