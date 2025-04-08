@@ -2,13 +2,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import {Link} from '@inertiajs/react';
 
 export default function Dashboard({threads}) {
     useEffect(()=> {
         console.log(threads.data);
         console.log(threads);
     }, [threads]);
+
+
     return (
         <AuthenticatedLayout>
         {threads.data.length === 0 ? <div>JSON is empty</div> : <div className="text-white">NOT EMPTY({threads.data.length} rows)</div>}

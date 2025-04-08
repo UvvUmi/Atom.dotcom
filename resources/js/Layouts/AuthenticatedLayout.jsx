@@ -7,6 +7,11 @@ import { useState } from 'react';
 import { Atom } from '../Components/Atom';
 import Cookies from 'js-cookie';
 import { LanguageMenu } from '../Components/LanguageMenu';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+import { useForm } from '@inertiajs/react';
+import PrimaryButton from '@/Components/PrimaryButton';
+import { transform } from 'motion';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -14,9 +19,47 @@ export default function AuthenticatedLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const { data, setData, processing } = useForm({
+        title: '',
+        content: '',
+    });
+
     return (
+
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
-            <nav className="dark:bg-gradient-to-br from-[#0f172a]  to-[#334155] sticky top-0 z-50 border-b-2 border-groove border-white">
+            <div id="overlay" className="fixed justify-center align-middle flex w-[100%] h-[100%] bg-overlay z-50">
+            <div className='bg-white flex items-center my-[210px] px-3 rounded-[25px]'>  
+                    <form>
+                        <span className='flex justify-center'>span</span>
+                        <div>
+                            <InputLabel htmlFor="title" value={Cookies.get('language') === 'lt' ? 'Antraštė' : 'Title'}/>
+                            <TextInput
+                                id='title'
+                                name='title'
+                                value={data.title}
+                                className="mt-1 block w-full"
+                                isFocused={true}
+                                onChange={(e) => setData('title', e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <InputLabel htmlFor='content' value={Cookies.get('language') === 'lt' ? "Turinys" : "Content"}/>
+                            <TextInput
+                                id="content"
+                                name='content'
+                                value={data.content}
+                                className="mt-1 block w-full"
+                                onChange={(e) => setData('content', e.target.value)}
+                            />
+                            <PrimaryButton className="mt-2" style={{transform: "translate(35%, 20%)"}} disabled={processing}>
+                                {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                </div>  
+            </div>
+
+            <nav className="dark:bg-gradient-to-br from-[#0f172a]  to-[#334155] sticky top-0 z-40 border-b-2 border-groove border-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 justify-between">
 
@@ -30,7 +73,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-chat-square-dots-fill me-1" viewBox="0 0 16 16">
                                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                             </svg>
-                            Create thread
+                            {Cookies.get('language') === 'lt' ? "Kurti įrašą" : "Create thread"}
                         </div>
 
                         <div className="hidden sm:ms-3 sm:flex sm:items-center">
