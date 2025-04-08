@@ -8,12 +8,14 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
+    
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'threads' => Thread::with(['user'])->paginate(5),
+            'threads' => Thread::with('user')->paginate(5),
         ]);
     }
+    
 
     public function store(Request $request)
     {

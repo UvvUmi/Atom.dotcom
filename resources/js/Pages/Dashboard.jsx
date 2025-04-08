@@ -34,7 +34,17 @@ export default function Dashboard({threads}) {
                                 <h5 className="card-title">{thread.title}</h5>
                                 <p className="card-text">{thread.content}</p>
                                 <Link href={route('thread', thread.id)} className="btn btn-primary">Visit Thread</Link>
-                                <p>By {thread.user.name}</p>
+                                <p>{new Date(thread.created_at).toLocaleString('lt-LT', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                })} ({new Date(thread.created_at).toLocaleString(Cookies.get('language') === 'lt' ? 'lt-LT' : 'en-US', {
+                                    weekday: 'long'
+                                })}) {new Date(thread.created_at).toLocaleString('lt-LT', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })}
+                                <br/>By {thread.user.name}</p>
                             </div>
                         </div>
                 ))}
