@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,12 +17,10 @@ use App\Http\Controllers\ThreadController;
 //     // ]);
 //     return redirect('dashboard');
 // });
-Route::get('/', function () {
-    $threads = Thread::with(['user'])->paginate(9);
-    return Inertia::render('Dashboard', ['threads' => $threads]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/post', [DashboardController::class, 'store'])->name('post');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

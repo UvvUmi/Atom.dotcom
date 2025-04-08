@@ -15,7 +15,7 @@ export default function Dashboard({threads}) {
         {threads.data.length === 0 ? <div>JSON is empty</div> : <div className="text-white">NOT EMPTY({threads.data.length} rows)</div>}
         {threads.data.length === 0 ? '' :
             <nav className="flex justify-center pt-3">
-                <ul className="pagination justify-content-end">
+                <ul className="pagination justify-content-end flex-wrap mx-3">
                     {threads.links.map((link, index) => (
                         <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
                             {index === 0 ? '←' : index === threads.links.length - 1 ? '→'
@@ -42,7 +42,7 @@ export default function Dashboard({threads}) {
         }
         {threads.data.length === 0 ? '' :
             <nav className="flex justify-center pb-3">
-                <ul className="pagination justify-content-end">
+                <ul className="pagination justify-content-end  flex-wrap mx-3">
                     {threads.links.map((link, index) => (
                         <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
                             {index === 0 ? '←' : index === threads.links.length - 1 ? '→'

@@ -3,7 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Atom } from '../Components/Atom';
 import Cookies from 'js-cookie';
 import { LanguageMenu } from '../Components/LanguageMenu';
@@ -19,18 +19,45 @@ export default function AuthenticatedLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
-    const { data, setData, processing } = useForm({
+    const { data, setData, post, processing, reset } = useForm({
         title: '',
         content: '',
     });
 
+    useEffect(()=> {
+        let overlay = document.getElementById("overlay");
+        document.getElementById("threadBtn")?.addEventListener('click', function(){
+            if (overlay && overlay.className === 'hidden') {
+                overlay.className = 'fixed justify-center align-middle w-[100%] h-[100%] bg-overlay z-50 flex';
+            }
+        });
+        document.getElementById('closeOverlay')?.addEventListener('click', function() {
+            if (overlay && overlay.className != 'hidden') {
+                overlay.className = 'hidden';
+            }
+        });
+    }, [])
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route('post'), {
+            onFinish: () => reset('title', 'content'),
+        });
+    };
+
     return (
 
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
-            <div id="overlay" className="fixed justify-center align-middle flex w-[100%] h-[100%] bg-overlay z-50">
+            <div id="overlay" className="hidden">
             <div className='bg-white flex items-center my-[210px] px-3 rounded-[25px]'>  
-                    <form>
-                        <span className='flex justify-center'>span</span>
+                    <form onSubmit={submit}>
+                        <div className='flex justify-center mt-1' id='closeOverlay'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" className="bi bi-x-circle cursor-pointer hover:bg-metroAlert hover:rounded-[15px]" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </div>
                         <div>
                             <InputLabel htmlFor="title" value={Cookies.get('language') === 'lt' ? 'Antraštė' : 'Title'}/>
                             <TextInput
@@ -40,16 +67,18 @@ export default function AuthenticatedLayout({ header, children }) {
                                 className="mt-1 block w-full"
                                 isFocused={true}
                                 onChange={(e) => setData('title', e.target.value)}
+                                maxLength='21'
                             />
                         </div>
                         <div>
-                            <InputLabel htmlFor='content' value={Cookies.get('language') === 'lt' ? "Turinys" : "Content"}/>
+                            <InputLabel htmlFor='content' className="mt-2" value={Cookies.get('language') === 'lt' ? "Turinys" : "Content"}/>
                             <TextInput
                                 id="content"
                                 name='content'
                                 value={data.content}
                                 className="mt-1 block w-full"
                                 onChange={(e) => setData('content', e.target.value)}
+                                maxLength='51'
                             />
                             <PrimaryButton className="mt-2" style={{transform: "translate(35%, 20%)"}} disabled={processing}>
                                 {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
@@ -69,7 +98,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        <div className="hidden md:flex text-white items-center">
+                        <div className="hidden md:flex text-white items-center cursor-pointer" id="threadBtn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-chat-square-dots-fill me-1" viewBox="0 0 16 16">
                                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                             </svg>

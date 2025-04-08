@@ -112,7 +112,7 @@ export default function Register() {
                     </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                    {Cookies.get('language') === "lt" ? "Registruotis" : "Register"}
+                        {Cookies.get('language') === "lt" ? "Registruotis" : "Register"}
                     </PrimaryButton>
                 </div>
             </form>
