@@ -23,6 +23,7 @@ export default {
             metroAlert: '#F45E5E',
             alertTransparent: 'rgba(244, 94, 94, 0.3)',
             atom: '#1F2937',
+            atomTransparent: 'rgba(31, 41, 55, 0.3)',
             overlay:"rgba(0, 0, 0, 0.3)",
             inner_layer: 'rgba(0, 0, 0, 0.45)',
         },
