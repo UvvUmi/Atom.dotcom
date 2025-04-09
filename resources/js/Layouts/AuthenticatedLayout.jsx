@@ -34,7 +34,7 @@ export default function AuthenticatedLayout({ header, children }) {
         document.getElementById('closeOverlay')?.addEventListener('click', function() {
             if (overlay && overlay.className != 'hidden') {
                 overlay.className = 'hidden';
-            }
+            }//REWRITE WITH USESTATE, ADD RESP MENU LISTENER
         });
     }, [])
 

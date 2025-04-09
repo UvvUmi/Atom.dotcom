@@ -3,4 +3,7 @@
 -Specific Threads with topic, images, content and comments
 -User upload and use avatar or set default(gravatar or something)
 -Customize cards/overlay
--Filters
+-Filters(newest, by likes)
+-Current Weather
+-Add img
+-Admin control trashed
