@@ -7,3 +7,4 @@
 -Current Weather
 -Add img
 -Admin control trashed
+-Comment pagination(someday)

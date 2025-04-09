@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +21,7 @@ export default function Dashboard({thread, comments}) {
                                     hour: '2-digit',
                                     minute: '2-digit',
                                 })} [ {thread.user['name']} ]</span>
+                    <div className=""><a href={route('dashboard')} className="font-black text-[32px] sm:ms-3 lg:ms-6 absolute">←</a></div>
                     <div className='flex justify-center mt-2'>
                         <img src={thread.img_url} alt="thread img" className='w-[200px]'/>
                     </div>
@@ -49,7 +50,7 @@ export default function Dashboard({thread, comments}) {
                         {comment.comment}
                     </div>
                 ))
-                    : <div>No comments here yet</div>
+                    : <div className='ms-3 text-white font-black bg-micronesia w-[50%] mt-3 indent-3 rounded-[15px] p-2'>{Cookies.get('language') === 'lt' ? 'Komentarų nėra' : 'No comments here yet'}</div>
                 }
             </div>
             {/* {comments.length === 0 ? '' :
