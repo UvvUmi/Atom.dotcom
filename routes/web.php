@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Thread;
 use App\Http\Controllers\ThreadController;
+use PhpParser\Node\Expr\PostInc;
 
 // Route::get('/', function () {
 //     // return Inertia::render('Welcome', [
@@ -27,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/thread/{id}', [PostController::class, 'show'])->name('thread');
+    Route::post('/thread/{id}/post_comment', [PostController::class, 'makeComment']);
+
+    
 });
 
 require __DIR__.'/auth.php';

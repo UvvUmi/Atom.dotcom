@@ -10,7 +10,7 @@ class Thread extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['title', 'content', 'user_id', 'img_url'];
+    protected $fillable = ['title', 'content', 'user_id', 'img_url', 'themeId'];
 
     protected $dates = ['deleted_at'];
     

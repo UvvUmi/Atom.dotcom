@@ -12,12 +12,26 @@ class PostController extends Controller
 {
     public function show(string $id)
     {
+
         return Inertia::render('Thread', [
             'thread' => Thread::with(['user:id,name'])->findOrFail($id),
-            'comments' => Comment::where('thread_id', $id)->get()->map(function ($comment) {
-                    $comment->user_name = User::find($comment->user_id)->name ?? 'Commenter';
-                    return $comment;
-                })->toArray(),
+            'comments' => Comment::join('users', 'comments.user_id', '=', 'users.id')
+                ->where('comments.thread_id', $id)->orderBy('created_at', 'desc')
+                ->get(['comments.*', 'users.name as user_name']),
         ]);
+    }
+
+    public function makeComment(Request $request, string $id)
+    {
+        $data = $request->validate([
+            'comment' => 'required|string|max:30|min:1',
+        ]);
+        $data['user_id'] = auth()->id();
+        $data['thread_id'] = $id;
+
+        Comment::create($data);
+
+        return back();
+
     }
 }

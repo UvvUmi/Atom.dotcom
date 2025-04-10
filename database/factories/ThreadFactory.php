@@ -19,11 +19,13 @@ class ThreadFactory extends Factory
     public function definition(): array
     {
         $id = strval(rand(50, 200));
+        $themeId = strval(rand(0, 3));
         return [
             'title' => $this->faker->state,
             'content' => $this->faker->words(rand(5, 30), true),
             'user_id' => User::inRandomOrder()->first()->id ?? 1,
             'img_url' => "https://picsum.photos/".$id."/100",
+            'themeId' => $themeId,
         ];
     }
 }

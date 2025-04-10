@@ -25,10 +25,11 @@ class DashboardController extends Controller
         ]);
 
         $data['user_id'] = auth()->id(); //user id sent via backend
+        $data['themeId'] = strval(rand(0, 3));
 
         Thread::create($data); 
 
 
-        return to_route('dashboard');
+        return back();
     }
 }

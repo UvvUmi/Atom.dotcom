@@ -50,7 +50,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
             <div id="overlay" className="hidden">
-            <div className='bg-white flex items-center my-[210px] px-3 rounded-[25px]'>  
+            <div className='bg-white flex items-center my-[10%] px-3 rounded-[25px]'>  
                     <form onSubmit={submit}>
                         <div className='flex justify-center mt-1' id='closeOverlay'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" className="bi bi-x-circle cursor-pointer hover:bg-metroAlert hover:rounded-[15px]" viewBox="0 0 16 16">
@@ -80,7 +80,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 onChange={(e) => setData('content', e.target.value)}
                                 maxLength='51'
                             />
-                            <PrimaryButton className="mt-2" style={{transform: "translate(35%, 20%)"}} disabled={processing}>
+                            <PrimaryButton className="mt-2" style={{transform: "translate(25%, 20%)"}} disabled={processing}>
                                 {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
                             </PrimaryButton>
                         </div>
