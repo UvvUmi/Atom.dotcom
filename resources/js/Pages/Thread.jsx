@@ -33,7 +33,7 @@ export default function Dashboard({thread, comments}) {
     return (
         <AuthenticatedLayout>
         <div className={bgObject[thread.themeId].concat(" ", "flex justify-center")}>
-            <div className="w-[100vw] h-[100vh]">
+            <div className="w-[100%] h-[100%] pb-[11%]">
                 <div className="flex justify-center flex-col text-white font-medium">
                     <span className='flex justify-center bg-atom w-[100%]'>{new Date(thread.created_at).toLocaleString(Cookies.get('language') === "lt" ? 'lt-LT' : 'en-US', {
                                     year: 'numeric',
