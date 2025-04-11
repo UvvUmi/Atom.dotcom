@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function Dashboard({threads}) {
     const user = usePage().props.auth.user;
@@ -27,7 +28,7 @@ export default function Dashboard({threads}) {
                 </ul>
             </nav> 
         }
-        {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">OOOPS!<br/>Nothing to show here</div> :
+        {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">{Cookies.get('language') === 'lt' ? (<React.Fragment>O, ne!<br/>Čia nieko nėra :(</React.Fragment>) : <React.Fragment>OOOPS!<br/>Nothing to show here :(</React.Fragment>} </div> :
             <div className="row flex justify-center flex-wrap mx-3">
                 {threads.data.map(thread => (
                         <div key={thread.id} className="card w-[20rem] m-[30px] text-white p-0 border-0 border-transparent bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-[#f33535] via-[#d8e9f0] to-[#33425b]" key={thread.id}>
