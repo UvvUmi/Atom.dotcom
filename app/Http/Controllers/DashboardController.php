@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'threads' => Thread::with('user')->paginate(5),
+            'threads' => Thread::with('user')->orderBy('created_at', 'desc')->paginate(5),
         ]);
     }
     
@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:20|min:1',
+            'title' => 'required|string|max:40|min:1',
             'content' => 'required|string|max:50|min:1',
         ]);
 
@@ -29,6 +29,17 @@ class DashboardController extends Controller
 
         Thread::create($data); 
 
+        return redirect('/');
+    }
+
+    public function destroy($id)
+    {
+        $thread = Thread::findOrFail($id);
+
+
+        if($thread['user_id'] === auth()->id()) {
+            $thread->delete();
+        }
 
         return back();
     }

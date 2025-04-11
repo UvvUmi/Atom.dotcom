@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/thread/{id}', [PostController::class, 'show'])->name('thread');
     Route::post('/thread/{id}/post_comment', [PostController::class, 'makeComment']);
+    Route::delete('/destroy_comment/{comment_id}', [PostController::class, 'destroyComment']);
+    Route::delete('/thread/{id}/destroy_thread', [PostController::class, 'destroyThread']);
+    Route::delete('/destroy/{id}', [DashboardController::class, 'destroy']);
 
     
 });

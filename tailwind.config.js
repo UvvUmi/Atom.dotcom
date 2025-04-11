@@ -25,6 +25,7 @@ export default {
             atom: '#1F2937',
             atomTransparent: 'rgba(31, 41, 55, 0.3)',
             overlay:"rgba(0, 0, 0, 0.3)",
+            atomRed: '#950606',
             inner_layer: 'rgba(0, 0, 0, 0.45)',
         },
     },

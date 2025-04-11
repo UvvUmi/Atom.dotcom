@@ -34,4 +34,27 @@ class PostController extends Controller
         return back();
 
     }
+
+    public function destroyThread($id)
+    {
+        $thread = Thread::findOrFail($id);
+
+
+        if($thread['user_id'] === auth()->id()) {
+            $thread->delete();
+        }
+
+        return redirect('/');
+    }
+
+    public function destroyComment($comment_id)
+    {
+        $comment = Comment::findOrFail($comment_id);
+
+        if($comment['user_id'] === auth()->id()) {
+            $comment->delete();
+        }
+
+        return back();
+    }
 }

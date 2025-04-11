@@ -8,3 +8,5 @@
 -Add img
 -Admin control trashed
 -Comment pagination(someday)
+-Get comments count
+-Add likes

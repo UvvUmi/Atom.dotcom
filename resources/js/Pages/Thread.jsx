@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import TextInput from '../Components/TextInput';
@@ -17,9 +17,11 @@ export default function Dashboard({thread, comments}) {
         '3': 'bg-gradient-to-tr from-[#00204a] via-[#005792] to-[#00bbf0]',
     };
 
-    const { data, setData, post, processing, reset } = useForm({
+    const { data, setData, post, processing, reset, delete:destroy } = useForm({
         comment: '',
     });
+
+    const user = usePage().props.auth.user;
 
     const postComment = (e) => {
         e.preventDefault();
@@ -33,7 +35,7 @@ export default function Dashboard({thread, comments}) {
     return (
         <AuthenticatedLayout>
         <div className={bgObject[thread.themeId].concat(" ", "flex justify-center")}>
-            <div className="w-[100%] h-[100%] pb-[11%]">
+            <div className="w-[100%] h-[100%] pb-[15%]">
                 <div className="flex justify-center flex-col text-white font-medium">
                     <span className='flex justify-center bg-atom w-[100%]'>{new Date(thread.created_at).toLocaleString(Cookies.get('language') === "lt" ? 'lt-LT' : 'en-US', {
                                     year: 'numeric',
@@ -42,7 +44,8 @@ export default function Dashboard({thread, comments}) {
                                     weekday: 'short',
                                     hour: '2-digit',
                                     minute: '2-digit',
-                                })} [ {thread.user['name']} ]</span>
+                                })} [ {thread.user['name']} ]
+                                {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
                     <div className=""><a href={route('dashboard')} className="font-black text-[2em] sm:ms-3 lg:ms-6 absolute">←</a></div>
                     <div className='flex justify-center mt-2'>
                         <img src={thread.img_url} alt="thread img" className='w-[300px] h-[200px] rounded-[15px]'/>
@@ -85,7 +88,11 @@ export default function Dashboard({thread, comments}) {
                                 weekday: 'short',
                                 hour: '2-digit',
                                 minute: '2-digit',
-                            })} [ {comment.user_name} ]
+                            })} [ {comment.user_name} ] 
+                            {user.id === comment.user_id ? 
+                                <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span> 
+                            : ''}
+                            
                         </div>
                         <span className='ms-1'>{comment.comment}</span>
                     </div>

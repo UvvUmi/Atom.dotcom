@@ -34,24 +34,29 @@ export default function AuthenticatedLayout({ header, children }) {
         document.getElementById('closeOverlay')?.addEventListener('click', function() {
             if (overlay && overlay.className != 'hidden') {
                 overlay.className = 'hidden';
-            }//REWRITE WITH USESTATE, ADD RESP MENU LISTENER
+            }
         });
+        document.getElementById('submitBtn')?.addEventListener('click', function() {
+            overlay ? overlay.className = 'hidden' : '';
+        });
+
     }, [])
 
     const submit = (e) => {
         e.preventDefault();
-
+        
         post(route('post'), {
             onFinish: () => reset('title', 'content'),
         });
+
     };
 
     return (
 
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
             <div id="overlay" className="hidden">
-            <div className='bg-white flex items-center my-[10%] px-3 rounded-[25px]'>  
-                    <form onSubmit={submit}>
+            <div className='flex items-center'>  
+                    <form className='bg-white p-3 rounded-[25px]'  onSubmit={submit}>
                         <div className='flex justify-center mt-1' id='closeOverlay'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" className="bi bi-x-circle cursor-pointer hover:bg-metroAlert hover:rounded-[15px]" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -67,20 +72,21 @@ export default function AuthenticatedLayout({ header, children }) {
                                 className="mt-1 block w-full"
                                 isFocused={true}
                                 onChange={(e) => setData('title', e.target.value)}
-                                maxLength='21'
+                                maxLength='50'
                             />
                         </div>
                         <div>
                             <InputLabel htmlFor='content' className="mt-2" value={Cookies.get('language') === 'lt' ? "Turinys" : "Content"}/>
-                            <TextInput
+                            <textarea
                                 id="content"
                                 name='content'
                                 value={data.content}
-                                className="mt-1 block w-full"
+                                className="mt-1 block w-full h-[100px] text-wrap items-top rounded-[15px]"
                                 onChange={(e) => setData('content', e.target.value)}
-                                maxLength='51'
+                                maxLength='100'
+                                style={{resize: 'none'}}
                             />
-                            <PrimaryButton className="mt-2" style={{transform: "translate(25%, 20%)"}} disabled={processing}>
+                            <PrimaryButton id="submitBtn" className="mt-2" style={{transform: "translate(40%, 20%)"}} disabled={processing}>
                                 {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
                             </PrimaryButton>
                         </div>
