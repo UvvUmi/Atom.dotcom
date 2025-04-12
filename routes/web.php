@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\Thread;
 use App\Http\Controllers\ThreadController;
 use PhpParser\Node\Expr\PostInc;
+use App\Http\Controllers\ThreadImgController;
 
 // Route::get('/', function () {
 //     // return Inertia::render('Welcome', [

@@ -24,7 +24,7 @@ class PostController extends Controller
     public function makeComment(Request $request, string $id)
     {
         $data = $request->validate([
-            'comment' => 'required|string|max:30|min:1',
+            'comment' => 'required|string|max:50|min:1',
         ]);
         $data['user_id'] = auth()->id();
         $data['thread_id'] = $id;

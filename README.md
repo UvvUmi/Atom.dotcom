@@ -1,12 +1,5 @@
--User Create thread/comments
--Threads/comments editable, removable only by author
--Specific Threads with topic, images, content and comments
 -User upload and use avatar or set default(gravatar or something)
--Customize cards/overlay
--Filters(newest, by likes)
+-Filters(newest, oldest, by comment count)
 -Current Weather
 -Add img
--Admin control trashed
--Comment pagination(someday)
 -Get comments count
--Add likes

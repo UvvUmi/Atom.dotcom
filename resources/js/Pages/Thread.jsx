@@ -48,7 +48,7 @@ export default function Dashboard({thread, comments}) {
                                 {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
                     <div className=""><a href={route('dashboard')} className="font-black text-[2em] sm:ms-3 lg:ms-6 absolute">←</a></div>
                     <div className='flex justify-center mt-2'>
-                        <img src={thread.img_url} alt="thread img" className='w-[300px] h-[200px] rounded-[15px]'/>
+                        <img src={`/uploads/${thread.img_url}`} alt="thread img" className='w-[300px] h-[300px] rounded-[15px]'/>
                     </div>
                     <div className='flex justify-center'>
                         <div className='text-wrap mt-2 p-2 rounded-[15px] bg-atomTransparent w-[75%]'>
@@ -67,7 +67,7 @@ export default function Dashboard({thread, comments}) {
                             className="ms-3 mt-2 w-[450px]"
                             placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
                             onChange={(e) => setData('comment', e.target.value)}
-                            maxLength='30'
+                            maxLength='50'
                             isFocused={true}
                         />
                         <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>

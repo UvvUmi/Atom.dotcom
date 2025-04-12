@@ -10,7 +10,7 @@ class Comment extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['comment', 'thread_id', 'user_id'];
+    protected $fillable = ['comment', 'thread_id', 'user_id', 'img_url'];
     
     protected $dates = ['deleted_at'];
 

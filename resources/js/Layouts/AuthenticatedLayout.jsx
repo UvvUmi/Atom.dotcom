@@ -22,6 +22,7 @@ export default function AuthenticatedLayout({ header, children }) {
     const { data, setData, post, processing, reset } = useForm({
         title: '',
         content: '',
+        file: null,
     });
 
     useEffect(()=> {
@@ -72,7 +73,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 className="mt-1 block w-full"
                                 isFocused={true}
                                 onChange={(e) => setData('title', e.target.value)}
-                                maxLength='50'
+                                maxLength='40'
                             />
                         </div>
                         <div>
@@ -86,7 +87,15 @@ export default function AuthenticatedLayout({ header, children }) {
                                 maxLength='100'
                                 style={{resize: 'none'}}
                             />
-                            <PrimaryButton id="submitBtn" className="mt-2" style={{transform: "translate(40%, 20%)"}} disabled={processing}>
+                            <input
+                                type="file"
+                                label="Upload thread image here"
+                                name="file"
+                                onChange={(e) =>
+                                    setData("file", e.target.files[0])
+                                }
+                            />
+                            <PrimaryButton id="submitBtn" className="mt-3" disabled={processing}>
                                 {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
                             </PrimaryButton>
                         </div>
