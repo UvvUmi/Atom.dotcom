@@ -47,9 +47,12 @@ export default function AuthenticatedLayout({ header, children }) {
         e.preventDefault();
         
         post(route('post'), {
-            onFinish: () => reset('title', 'content'),
+            onFinish: () => {
+                reset('title', 'content');
+                e.target.reset();
+            },
         });
-
+        
     };
 
     return (
@@ -89,7 +92,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             />
                             <input
                                 type="file"
-                                label="Upload thread image here"
                                 name="file"
                                 onChange={(e) =>
                                     setData("file", e.target.files[0])

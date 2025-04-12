@@ -22,17 +22,17 @@ class DashboardController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:40|min:1',
             'content' => 'required|string|max:100|min:1',
+            'file' => 'required|mimes:jpeg,jpg,png,gif,webm|max:10000',
         ]);
 
         $data['user_id'] = auth()->id(); //current user id sent via backend
         $data['themeId'] = strval(rand(0, 3));
 
-        if($request['file']) {
-            $fileName = time().'.'.$request->file->extension();
-            $request->file->move(public_path('uploads'), $fileName);
+        $fileName = time().'.'.$request->file->extension();
+        $request->file->move(public_path('uploads'), $fileName);
 
-            $data['img_url'] = $fileName;
-        }
+        $data['img_url'] = $fileName;
+        
 
         Thread::create($data); 
 
