@@ -46,9 +46,9 @@ export default function Dashboard({thread, comments}) {
                                     minute: '2-digit',
                                 })} [ {thread.user['name']} ]
                                 {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
-                    <div className=""><a href={route('dashboard')} className="font-black text-[2em] sm:ms-3 lg:ms-6 absolute">←</a></div>
+                    <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
                     <div className='flex justify-center mt-2'>
-                        <img src={`/uploads/${thread.img_url}`} alt="thread img" className='w-[300px] h-[300px] rounded-[15px]'/>
+                        <img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[300px] h-[300px] rounded-[15px]'/>
                     </div>
                     <div className='flex justify-center'>
                         <div className='text-wrap mt-2 p-2 rounded-[15px] bg-atomTransparent w-[75%]'>

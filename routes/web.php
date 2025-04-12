@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
     Route::get('/thread/{id}', [PostController::class, 'show'])->name('thread');
     Route::post('/thread/{id}/post_comment', [PostController::class, 'makeComment']);
     Route::delete('/destroy_comment/{comment_id}', [PostController::class, 'destroyComment']);

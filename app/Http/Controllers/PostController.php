@@ -57,4 +57,5 @@ class PostController extends Controller
 
         return back();
     }
+
 }

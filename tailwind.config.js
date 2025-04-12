@@ -27,6 +27,7 @@ export default {
             overlay:"rgba(0, 0, 0, 0.3)",
             atomRed: '#950606',
             inner_layer: 'rgba(0, 0, 0, 0.45)',
+            atomWhite: '#FFF'
         },
     },
 
