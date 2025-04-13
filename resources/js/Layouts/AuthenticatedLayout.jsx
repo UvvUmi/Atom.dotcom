@@ -240,13 +240,13 @@ export default function AuthenticatedLayout({ header, children }) {
                             <LanguageMenu/>
                         </div>
                         <div className="mt-2">
-                            <ResponsiveNavLink
-                                method="get"
-                                href={route('dashboard')}
-                                as="button"
-                                className="text-white">
+                            <span
+                                onClick={() => {
+                                    document.getElementById('overlay').className='fixed justify-center align-middle w-[100%] h-[100%] bg-overlay z-50 flex';
+                                }}
+                                className="flex w-full items-start border-l-4 py-2 pe-4 ps-3 border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 focus:border-gray-300 focus:bg-gray-50 focus:text-gray-800 text-base font-medium transition duration-150 ease-in-out focus:outline-none text-white">
                                 {Cookies.get('language') === "lt" ? "Kurti įrašą" : "Create thread"}
-                            </ResponsiveNavLink>
+                            </span>
                         </div>
                         <div className="mt-2">
                             <ResponsiveNavLink
