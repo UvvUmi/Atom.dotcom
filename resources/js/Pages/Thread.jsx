@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import TextInput from '../Components/TextInput';
 import PrimaryButton from '../Components/PrimaryButton';
 import SendButton from '../../../public/sendBtn.svg';
+import CommentsCountIcon from '../Components/CommentsCount';
 
-export default function Dashboard({thread, comments}) {
+export default function Dashboard({thread, comments, comment_count}) {
     console.log(comments);
     console.log(thread);
 
@@ -35,7 +36,7 @@ export default function Dashboard({thread, comments}) {
     return (
         <AuthenticatedLayout>
         <div className={bgObject[thread.themeId].concat(" ", "flex justify-center")}>
-            <div className="w-[100%] h-[100%] pb-[15%]">
+            <div className="w-[100%] h-[100%] pb-[14%]">
                 <div className="flex justify-center flex-col text-white font-medium">
                     <span className='flex justify-center bg-atom w-[100%]'>{new Date(thread.created_at).toLocaleString(Cookies.get('language') === "lt" ? 'lt-LT' : 'en-US', {
                                     year: 'numeric',
@@ -47,10 +48,14 @@ export default function Dashboard({thread, comments}) {
                                 })} [ {thread.user['name']} ]
                                 {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
                     <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
-                    <div className='flex justify-center mt-2'>
-                        <img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[300px] h-[300px] rounded-[15px]'/>
+                    <div className='flex justify-center'>
+                        <div className='flex flex-col mt-2 text-center'>
+                            {thread.img_url} 400x350
+                            <img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[400px] h-[350px] border-2 border-double'/>
+                        </div>
                     </div>
                     <div className='flex justify-center'>
+                        
                         <div className='text-wrap mt-2 p-2 rounded-[15px] bg-atomTransparent w-[75%]'>
                             <span className="font-black">{thread.title}</span><br/>
                             <span className="font-light">{thread.content}</span>
@@ -58,13 +63,20 @@ export default function Dashboard({thread, comments}) {
                     </div>
                 </div>
 
+            {comments.length >= 200 ? 
+                <div className='text-metroAlert flex gap-3 font-medium items-center justify-center mt-1'>{Cookies.get('language') === 'lt' ? 'Įrašas viršijo komentarų limitą' : 'Comment limit reached'}
+                    <CommentsCountIcon 
+                        count={comment_count}
+                    />
+                </div> 
+                :                  
                 <form onSubmit={postComment} className='flex items-center'>
                         <TextInput
                             id="comment"
                             name="comment"
                             type='text'
                             value={data.comment}
-                            className="ms-3 mt-2 w-[450px]"
+                            className="md:ms-2 mt-2 md:w-[450px]"
                             placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
                             onChange={(e) => setData('comment', e.target.value)}
                             maxLength='50'
@@ -73,9 +85,14 @@ export default function Dashboard({thread, comments}) {
                         <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
                             <img src={SendButton} className="mt-2" alt="send me!"/>
                         </button>
+                        <div className='md:ms-1'>
+                            <CommentsCountIcon
+                                    count={comment_count}
+                            />
+                        </div>     
                 </form>
-
-                            
+            }
+          
                 {comments.length != 0 
                     ? comments.map(comment => 
                 (

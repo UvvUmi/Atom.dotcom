@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Thread;
+use App\Models\Comment;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -11,8 +12,15 @@ class DashboardController extends Controller
     
     public function index()
     {
+
         return Inertia::render('Dashboard', [
-            'threads' => Thread::with('user')->orderBy('created_at', 'desc')->paginate(5),
+            'threads' => Thread::with('user')->orderBy('created_at', 'desc')->paginate(10),
+            'comment_count_object' => 
+            Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
+            ->where('comments.deleted_at', null)
+            ->select('comments.thread_id', Comment::raw('COUNT(*) as CommentCount'))
+            ->groupBy('comments.thread_id')
+            ->pluck('CommentCount', 'thread_id'),
         ]);
     }
     
@@ -25,14 +33,14 @@ class DashboardController extends Controller
             'file' => 'required|mimes:jpeg,jpg,png,gif,webm|max:10000',
         ]);
 
-        $data['user_id'] = auth()->id(); //current user id sent via backend
+        $data['user_id'] = auth()->id();
         $data['themeId'] = strval(rand(0, 3));
+        
 
-        $fileName = time().'.'.$request->file->extension();
+        $fileName = auth()->id().time().'.'.$request->file->extension();
         $request->file->move(public_path('uploads'), $fileName);
 
         $data['img_url'] = $fileName;
-        
 
         Thread::create($data); 
 

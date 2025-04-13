@@ -1,5 +1,7 @@
--User upload and use avatar or set default(gravatar or something)
--Filters(newest, oldest, by comment count)
--Current Weather
--Add img
--Get comments count
+TODO:
+-Avatars
+-Update: Avatars, Comments
+-Comment images
+-Image upload input style
+-Filter threads: Newest, oldest, by Comment count
+-Go to Thread go bottom, go top
