@@ -6,6 +6,7 @@ import TextInput from '../Components/TextInput';
 import PrimaryButton from '../Components/PrimaryButton';
 import SendButton from '../../../public/sendBtn.svg';
 import CommentsCountIcon from '../Components/CommentsCount';
+import ArrowUp from '../Components/ArrowUp';
 
 export default function Dashboard({thread, comments, comment_count}) {
     console.log(comments);
@@ -32,6 +33,16 @@ export default function Dashboard({thread, comments, comment_count}) {
             onFinish: () => reset('comment'),
         });
     };
+
+    useEffect(()=>{
+            window.onscroll = function() {
+                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                    document.getElementById('toTop').className = 'bottom-10 right-10 fixed bg-micronesia p-3 rounded-[50%] hover:scale-[1.1] active:scale-[0.9]';
+                } else {
+                    document.getElementById('toTop').className = 'hidden';
+                }
+            };
+    }, [])
 
     return (
         <AuthenticatedLayout>
@@ -62,6 +73,10 @@ export default function Dashboard({thread, comments, comment_count}) {
                         </div>
                     </div>
                 </div>
+                
+                    <div onClick={()=>{window.scrollTo(0, 0)}} id="toTop" style={{transition: 'transform 0.2s ease-in-out'}}>
+                        <ArrowUp/>
+                    </div>
 
             {comments.length >= 200 ? 
                 <div className='text-metroAlert flex gap-3 font-medium items-center justify-center mt-1'>{Cookies.get('language') === 'lt' ? 'Įrašas viršijo komentarų limitą' : 'Comment limit reached'}
@@ -85,10 +100,13 @@ export default function Dashboard({thread, comments, comment_count}) {
                         <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
                             <img src={SendButton} className="mt-2" alt="send me!"/>
                         </button>
-                        <div className='md:ms-1'>
+                        <div className='md:ms-1 flex gap-2'>
                             <CommentsCountIcon
                                     count={comment_count}
                             />
+                            <span onClick={()=> {
+                                window.scrollTo(0, document.body.scrollHeight);
+                            }} className="text-atomWhite font-medium underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
                         </div>     
                 </form>
             }
