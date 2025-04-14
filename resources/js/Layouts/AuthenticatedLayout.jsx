@@ -90,16 +90,24 @@ export default function AuthenticatedLayout({ header, children }) {
                                 maxLength='100'
                                 style={{resize: 'none'}}
                             />
+                            <p>{Cookies.get('language') === 'lt' ? 'Max dydis: 10 MB | Formatai: jpeg jpg png gif webm | Raiška < 3200x3200' 
+                            : 'Max filesize: 10 MB | File formats: jpeg jpg png gif webm | Resolution < 3200x3200'} </p>
                             <input
+                                id="inputFile"
                                 type="file"
                                 name="file"
                                 onChange={(e) =>
                                     setData("file", e.target.files[0])
                                 }
                             />
-                            <PrimaryButton id="submitBtn" className="mt-3" disabled={processing}>
-                                {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
-                            </PrimaryButton>
+                            <div className="flex">
+                                {data.content != '' && data.title != '' && data.file != null ?
+                                <PrimaryButton id="submitBtn" className="mt-1" disabled={processing}>
+                                    {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
+                                    <span>{document.getElementById('inputFile').value}</span>
+                                </PrimaryButton>
+                                : ''}
+                            </div>
                         </div>
                     </form>
                 </div>  

@@ -97,9 +97,11 @@ export default function Dashboard({thread, comments, comment_count}) {
                             maxLength='50'
                             isFocused={true}
                         />
-                        <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
-                            <img src={SendButton} className="mt-2" alt="send me!"/>
-                        </button>
+                        { data.comment != '' ?
+                            <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
+                                <img src={SendButton} className="mt-2" alt="send me!"/>
+                            </button>
+                        : ''}
                         <div className='md:ms-1 flex gap-2'>
                             <CommentsCountIcon
                                     count={comment_count}

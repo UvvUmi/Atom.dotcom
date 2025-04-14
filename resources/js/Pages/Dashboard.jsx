@@ -50,7 +50,7 @@ export default function Dashboard({threads, comment_count_object}) {
                                     <span className='text-metroAlert font-medium'>{comment_count_object[thread.id] >= 200 ? Cookies.get('language') === 'lt' ? "Komentarų limitas pasiektas" : "Comment limit reached" : ""}</span>
                                 </div>
                                 {user.id === thread.user_id ?
-                                    <span onClick={() => {destroy(`/destroy/${thread.id}`)}} className='text-atomRed font-medium cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span>
+                                    <span onClick={() => {destroy(`/destroy/${thread.id}`);}} className='text-atomRed font-medium cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span>
                                 : ''}
                                 <div className='flex justify-center'>
                                     <Link href={route('thread', thread.id)} className="btn text-white mt-3 w-[95%] bg-atom border-atom hover:bg-micronesia">

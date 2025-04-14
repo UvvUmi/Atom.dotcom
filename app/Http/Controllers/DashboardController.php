@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:40|min:1',
             'content' => 'required|string|max:100|min:1',
-            'file' => 'required|mimes:jpeg,jpg,png,gif,webm|max:10000',
+            'file' => 'required|mimes:jpeg,jpg,png,gif,webm|max:10240',
         ]);
 
         $data['user_id'] = auth()->id();
