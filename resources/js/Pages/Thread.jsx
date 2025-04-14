@@ -61,7 +61,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                     <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
                     <div className='flex justify-center'>
                         <div className='flex flex-col mt-2 text-center'>
-                            {thread.img_url} 400x350
+                            {thread.img_name != null ? thread.img_name : thread.img_url} 400x350
                             <img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[400px] h-[350px] border-2 border-double'/>
                         </div>
                     </div>

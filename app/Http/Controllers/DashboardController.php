@@ -37,10 +37,11 @@ class DashboardController extends Controller
         $data['themeId'] = strval(rand(0, 3));
         
 
-        $fileName = auth()->id().time().'.'.$request->file->extension();
-        $request->file->move(public_path('uploads'), $fileName);
+        $fileNameFiltered = auth()->id().time().'.'.$request->file->extension();
+        $request->file->move(public_path('uploads'), $fileNameFiltered);
 
-        $data['img_url'] = $fileName;
+        $data['img_url'] = $fileNameFiltered;
+        $data['img_name'] = $request['filename'];
 
         Thread::create($data); 
 
@@ -51,8 +52,8 @@ class DashboardController extends Controller
     {
         $thread = Thread::findOrFail($id);
 
-
         if($thread['user_id'] === auth()->id()) {
+            unlink(public_path('uploads/'.$thread['img_url']));
             $thread->delete();
         }
 

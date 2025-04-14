@@ -42,6 +42,7 @@ class PostController extends Controller
 
 
         if($thread['user_id'] === auth()->id()) {
+            unlink(public_path('uploads/'.$thread['img_url']));
             $thread->delete();
         }
 

@@ -12,6 +12,7 @@ import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { transform } from 'motion';
+import UploadIcon from '../Components/UploadIcon';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -23,6 +24,7 @@ export default function AuthenticatedLayout({ header, children }) {
         title: '',
         content: '',
         file: null,
+        filename: '',
     });
 
     useEffect(()=> {
@@ -37,9 +39,6 @@ export default function AuthenticatedLayout({ header, children }) {
                 overlay.className = 'hidden';
             }
         });
-        document.getElementById('submitBtn')?.addEventListener('click', function() {
-            overlay ? overlay.className = 'hidden' : '';
-        });
 
     }, [])
 
@@ -48,12 +47,14 @@ export default function AuthenticatedLayout({ header, children }) {
         
         post(route('post'), {
             onFinish: () => {
-                reset('title', 'content');
+                reset('title', 'content', 'filename');
                 e.target.reset();
             },
         });
         
     };
+
+    let imgUpload = document.getElementById('threadImgUpload');
 
     return (
 
@@ -92,19 +93,29 @@ export default function AuthenticatedLayout({ header, children }) {
                             />
                             <p>{Cookies.get('language') === 'lt' ? 'Max dydis: 10 MB | Formatai: jpeg jpg png gif webm | Raiška < 3200x3200' 
                             : 'Max filesize: 10 MB | File formats: jpeg jpg png gif webm | Resolution < 3200x3200'} </p>
+                            <label for='threadImgUpload'>
+                                <UploadIcon text={Cookies.get('language') === 'lt' ? 'Paveiksliuką' : 'Image'}/>
+                                {imgUpload != null && imgUpload.value != '' ? imgUpload.value.replace("C:\\fakepath\\", '') : ''}
+                            </label>
                             <input
-                                id="inputFile"
+                                id='threadImgUpload'
+                                className="hidden"
                                 type="file"
                                 name="file"
                                 onChange={(e) =>
-                                    setData("file", e.target.files[0])
+                                    setData(
+                                        "file", e.target.files[0],
+                                    )
                                 }
                             />
                             <div className="flex">
                                 {data.content != '' && data.title != '' && data.file != null ?
-                                <PrimaryButton id="submitBtn" className="mt-1" disabled={processing}>
+                                <PrimaryButton id="submitBtn" className="mt-1" disabled={processing} 
+                                onClick={()=> {
+                                    document.getElementById('overlay').className='hidden'; 
+                                    setData('filename', document.getElementById('threadImgUpload').value.replace("C:\\fakepath\\", ""))
+                                }}>
                                     {Cookies.get('language') === "lt" ? "Paskelbti" : "Publish"}
-                                    <span>{document.getElementById('inputFile').value}</span>
                                 </PrimaryButton>
                                 : ''}
                             </div>
