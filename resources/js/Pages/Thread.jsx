@@ -107,7 +107,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 className="md:ms-2 mt-2 md:w-[450px]"
                                 placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
                                 onChange={(e) => setData('comment', e.target.value)}
-                                maxLength='50'
+                                maxLength='256'
                                 isFocused={true}
                             />
                             { data.comment != '' ?
@@ -169,7 +169,17 @@ export default function Dashboard({thread, comments, comment_count}) {
                             : ''}
                             
                         </div>
-                        <span className='ms-1'>{comment.comment}</span>
+                        <a href={`/uploads/comments/${comment.img_url}`} download={comment.user_id + "_" + comment.img_name} className='underline ms-1'>
+                            {comment.img_name}
+                        </a>
+                            {comment.img_url != null ?
+                            <div className="flex col">
+                                <a href={`/uploads/comments/${comment.img_url}`} target='_blank'>
+                                    <img src={`/uploads/comments/${comment.img_url}`} alt={comment.img_name} className='w-[250px] shadow-lg mt-1 mb-3 rounded-[15px]'/>
+                                </a>
+                                <span className='ms-1 text-wrap'>{comment.comment}</span>
+                            </div>
+                            : <span className='ms-1 text-wrap'>{comment.comment}</span>}
                     </div>
                 ))
                     : <div className='ms-3 text-white font-black bg-micronesia w-[50%] mt-3 indent-3 rounded-[15px] p-2'>{Cookies.get('language') === 'lt' ? 'Komentarų nėra' : 'No comments here yet'}</div>

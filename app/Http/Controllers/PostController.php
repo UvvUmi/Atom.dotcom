@@ -25,7 +25,7 @@ class PostController extends Controller
     public function makeComment(Request $request, string $id)
     {
         $data = $request->validate([
-            'comment' => 'required|string|max:50|min:1',
+            'comment' => 'required|string|max:256|min:1',
         ]);
 
         $data['user_id'] = auth()->id();
@@ -67,7 +67,9 @@ class PostController extends Controller
         $comment = Comment::findOrFail($comment_id);
 
         if($comment['user_id'] === auth()->id()) {
-            unlink(public_path('uploads/comments/'.$comment['img_url']));
+            if($comment['img_url'] != null) {
+                unlink(public_path('uploads/comments/'.$comment['img_url']));
+            }
             $comment->delete();
         }
 
