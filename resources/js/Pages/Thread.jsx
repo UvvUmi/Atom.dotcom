@@ -141,7 +141,12 @@ export default function Dashboard({thread, comments, comment_count}) {
                             </div>
                     </form>
                     {commentImgName != null && commentImgName.value != '' 
-                    ? <div className='ms-3'>{commentImgName.value.replace("C:\\fakepath\\", "")}</div> 
+                    ? <div className='ms-3'>{commentImgName.value.replace("C:\\fakepath\\", "")} 
+                        <span className='ms-1 font-extrabold text-metroAlert cursor-pointer' onClick={()=> {
+                            setData('commentFile', null);
+                            commentImgName.value = '';
+                        }}>X</span>
+                    </div> 
                     : ''}          
                 </div>
             }
