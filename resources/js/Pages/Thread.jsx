@@ -7,6 +7,7 @@ import PrimaryButton from '../Components/PrimaryButton';
 import SendButton from '../../../public/sendBtn.svg';
 import CommentsCountIcon from '../Components/CommentsCount';
 import ArrowUp from '../Components/ArrowUp';
+import UploadIcon from '../Components/UploadIcon';
 
 export default function Dashboard({thread, comments, comment_count}) {
     console.log(comments);
@@ -44,6 +45,8 @@ export default function Dashboard({thread, comments, comment_count}) {
             };
     }, [])
 
+    let commentImgName = document.getElementById('commentImgUpload');
+
     return (
         <AuthenticatedLayout>
         <div className={bgObject[thread.themeId].concat(" ", "flex justify-center")}>
@@ -61,8 +64,11 @@ export default function Dashboard({thread, comments, comment_count}) {
                     <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
                     <div className='flex justify-center'>
                         <div className='flex flex-col mt-2 text-center'>
-                            {thread.img_name != null ? thread.img_name : thread.img_url} 400x350
-                            <img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[400px] h-[350px] border-2 border-double'/>
+                            {thread.img_name != null ? <a href={`../uploads/${thread.img_url}`} download={thread.user_id + '_' + thread.img_name} className='flex justify-center underline'>{thread.img_name} 400x350</a>  : <span>{thread.img_url} 400x350</span>}
+                            <a href={thread.img_name != null ?
+                                `../uploads/${thread.img_url}` : thread.img_url}
+                                target="_blank"><img src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="thread img" className='w-[400px] h-[350px] border-2 border-double'/>
+                            </a>
                         </div>
                     </div>
                     <div className='flex justify-center'>
@@ -85,32 +91,51 @@ export default function Dashboard({thread, comments, comment_count}) {
                     />
                 </div> 
                 :                  
-                <form onSubmit={postComment} className='flex items-center'>
-                        <TextInput
-                            id="comment"
-                            name="comment"
-                            type='text'
-                            value={data.comment}
-                            className="md:ms-2 mt-2 md:w-[450px]"
-                            placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
-                            onChange={(e) => setData('comment', e.target.value)}
-                            maxLength='50'
-                            isFocused={true}
-                        />
-                        { data.comment != '' ?
-                            <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
-                                <img src={SendButton} className="mt-2" alt="send me!"/>
-                            </button>
-                        : ''}
-                        <div className='md:ms-1 flex gap-2'>
-                            <CommentsCountIcon
-                                    count={comment_count}
+                <div>
+                    <form onSubmit={postComment} className='flex items-center'>
+                            <TextInput
+                                id="comment"
+                                name="comment"
+                                type='text'
+                                value={data.comment}
+                                className="md:ms-2 mt-2 md:w-[450px]"
+                                placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
+                                onChange={(e) => setData('comment', e.target.value)}
+                                maxLength='50'
+                                isFocused={true}
                             />
-                            <span onClick={()=> {
-                                window.scrollTo(0, document.body.scrollHeight);
-                            }} className="text-atomWhite font-medium underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
-                        </div>     
-                </form>
+                            { data.comment != '' ?
+                                <div className='flex items-center ms-1'>
+                                    <label htmlFor="commentImgUpload">
+                                        <UploadIcon text=''/>
+                                    </label>
+                                    <input
+                                    id='commentImgUpload'
+                                    className="hidden"
+                                    type="file"
+                                    name="commentFile"
+                                    onChange={(e) =>
+                                        setData(
+                                            "commentFile", e.target.files[0],
+                                        )
+                                    }
+                                    />
+                                    <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
+                                        <img src={SendButton} className="mt-2" alt="send me!"/>
+                                    </button>
+                                </div>
+                                : ''}
+                            <div className='md:ms-1 flex gap-2'>
+                                <CommentsCountIcon
+                                        count={comment_count}
+                                />
+                                <span onClick={()=> {
+                                    window.scrollTo(0, document.body.scrollHeight);
+                                }} className="text-atomWhite font-medium underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
+                            </div>     
+                    </form>
+                    {commentImgName != null && commentImgName.value != '' ? <span className='ms-3'>{commentImgName.value.replace("C:\\fakepath\\", "")}</span> : ''}            
+                </div>
             }
           
                 {comments.length != 0 

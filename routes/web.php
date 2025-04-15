@@ -34,8 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/destroy_comment/{comment_id}', [PostController::class, 'destroyComment']);
     Route::delete('/thread/{id}/destroy_thread', [PostController::class, 'destroyThread']);
     Route::delete('/destroy/{id}', [DashboardController::class, 'destroy']);
-
-    
+   
 });
 
 require __DIR__.'/auth.php';

@@ -93,10 +93,10 @@ export default function AuthenticatedLayout({ header, children }) {
                             />
                             <p>{Cookies.get('language') === 'lt' ? 'Max dydis: 10 MB | Formatai: jpeg jpg png gif webm | Raiška < 3200x3200' 
                             : 'Max filesize: 10 MB | File formats: jpeg jpg png gif webm | Resolution < 3200x3200'} </p>
-                            <label for='threadImgUpload'>
+                            <label for='threadImgUpload' className='flex'>
                                 <UploadIcon text={Cookies.get('language') === 'lt' ? 'Paveiksliuką' : 'Image'}/>
-                                {imgUpload != null && imgUpload.value != '' ? imgUpload.value.replace("C:\\fakepath\\", '') : ''}
                             </label>
+                            {imgUpload != null && imgUpload.value != '' ? imgUpload.value.replace("C:\\fakepath\\", '') : ''}
                             <input
                                 id='threadImgUpload'
                                 className="hidden"
