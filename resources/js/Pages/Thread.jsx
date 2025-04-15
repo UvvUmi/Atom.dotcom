@@ -22,6 +22,9 @@ export default function Dashboard({thread, comments, comment_count}) {
 
     const { data, setData, post, processing, reset, delete:destroy } = useForm({
         comment: '',
+        commentFile: null,
+        commentFilename: '',
+
     });
 
     const user = usePage().props.auth.user;
@@ -30,8 +33,10 @@ export default function Dashboard({thread, comments, comment_count}) {
         e.preventDefault();
 
         post(`/thread/${thread.id}/post_comment`, {
-            comment: data.comment,
-            onFinish: () => reset('comment'),
+            onFinish: () => {
+                reset('comment', 'commentFilename');
+                e.target.reset();
+            },
         });
     };
 
@@ -43,6 +48,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                     document.getElementById('toTop').className = 'hidden';
                 }
             };
+
     }, [])
 
     let commentImgName = document.getElementById('commentImgUpload');
@@ -120,7 +126,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                                         )
                                     }
                                     />
-                                    <button title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
+                                    <button onClick={()=>{setData('commentFilename', commentImgName.value.replace("C:\\fakepath\\", ""))}} title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
                                         <img src={SendButton} className="mt-2" alt="send me!"/>
                                     </button>
                                 </div>
@@ -132,9 +138,11 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 <span onClick={()=> {
                                     window.scrollTo(0, document.body.scrollHeight);
                                 }} className="text-atomWhite font-medium underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
-                            </div>     
+                            </div>
                     </form>
-                    {commentImgName != null && commentImgName.value != '' ? <span className='ms-3'>{commentImgName.value.replace("C:\\fakepath\\", "")}</span> : ''}            
+                    {commentImgName != null && commentImgName.value != '' 
+                    ? <div className='ms-3'>{commentImgName.value.replace("C:\\fakepath\\", "")}</div> 
+                    : ''}          
                 </div>
             }
           
@@ -162,18 +170,6 @@ export default function Dashboard({thread, comments, comment_count}) {
                     : <div className='ms-3 text-white font-black bg-micronesia w-[50%] mt-3 indent-3 rounded-[15px] p-2'>{Cookies.get('language') === 'lt' ? 'Komentarų nėra' : 'No comments here yet'}</div>
                 }
             </div>
-            {/* {comments.length === 0 ? '' :
-            <nav className="flex justify-center pt-3">
-                <ul className="pagination justify-content-end flex-wrap mx-3">
-                    {comments.links.map((link, index) => (
-                        <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
-                            {index === 0 ? '←' : index === comments.links.length - 1 ? '→'
-                            : link.label}
-                        </a></li>
-                    ))}
-                </ul>
-            </nav> 
-        } */}
             <Head title={thread.title} />
         </div>
         </AuthenticatedLayout>

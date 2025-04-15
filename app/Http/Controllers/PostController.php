@@ -27,8 +27,21 @@ class PostController extends Controller
         $data = $request->validate([
             'comment' => 'required|string|max:50|min:1',
         ]);
+
         $data['user_id'] = auth()->id();
         $data['thread_id'] = $id;
+
+        if ($request['commentFile'] != null && $request['commentFilename'] != null) {
+            $request->validate([
+                'commentFile' => 'mimes:jpeg,jpg,png,gif,webm|max:10240',
+            ]);
+
+            $fileURLfiltered = auth()->id().time().'.'.$request->commentFile->extension();
+            $request->commentFile->move(public_path('uploads/comments'), $fileURLfiltered);
+
+            $data['img_url'] = $fileURLfiltered;
+            $data['img_name'] = $request['commentFilename'];
+        }
 
         Comment::create($data);
 
@@ -54,6 +67,7 @@ class PostController extends Controller
         $comment = Comment::findOrFail($comment_id);
 
         if($comment['user_id'] === auth()->id()) {
+            unlink(public_path('uploads/comments/'.$comment['img_url']));
             $comment->delete();
         }
 
