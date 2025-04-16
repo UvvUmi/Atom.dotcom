@@ -177,9 +177,9 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 <a href={`/uploads/comments/${comment.img_url}`} target='_blank'>
                                     <img src={`/uploads/comments/${comment.img_url}`} alt={comment.img_name} className='w-[250px] shadow-lg mt-1 mb-3 rounded-[15px]'/>
                                 </a>
-                                <span className='ms-1 text-wrap'>{comment.comment}</span>
+                                <span className='m-2'>{comment.comment}</span>
                             </div>
-                            : <span className='ms-1 text-wrap'>{comment.comment}</span>}
+                            : <span>{comment.comment}</span>}
                     </div>
                 ))
                     : <div className='ms-3 text-white font-black bg-micronesia w-[50%] mt-3 indent-3 rounded-[15px] p-2'>{Cookies.get('language') === 'lt' ? 'Komentarų nėra' : 'No comments here yet'}</div>

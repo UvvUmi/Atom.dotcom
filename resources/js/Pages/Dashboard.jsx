@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import CommentsCountIcon from '../Components/CommentsCount';
+import FilterIcon from '../Components/FilterIcon';
 
 export default function Dashboard({threads, comment_count_object}) {
     const user = usePage().props.auth.user;
@@ -15,19 +16,49 @@ export default function Dashboard({threads, comment_count_object}) {
 
     const { delete:destroy } = useForm({});
 
+    let filterLayer = document.getElementById('filterLayer');
+    let filterWrapper = document.getElementById('filterWrapper');
+
     return (
         <AuthenticatedLayout>
         {threads.data.length === 0 ? '' :
-            <nav className="flex justify-center pt-3">
-                <ul className="pagination justify-content-end flex-wrap mx-3">
-                    {threads.links.map((link, index) => (
-                        <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
-                            {index === 0 ? '←' : index === threads.links.length - 1 ? '→'
-                            : link.label}
-                        </a></li>
-                    ))}
-                </ul>
-            </nav> 
+            <div className="flex justify-center flex-col">
+
+                <div className={"flex justify-center mt-1 relative "} id='filterWrapper'>
+                    <FilterIcon text={Cookies.get('language') === 'lt' ? 'Filtruoti pagal' : 'Filter by'}/>
+
+                    <div id="filterLayer" className="absolute top-[100%] bg-atomWhite rounded-[15px] z-30 p-2">
+                        <form className="flex row">
+                            <ul className='flex gap-3'>
+                                <li>
+                                    <input type="radio" id="filter_comment" name="filter" value="comment"/>
+                                    <label htmlFor='filter_comment'>{Cookies.get('language') === 'lt' ? 'Komentarus' : 'Comments'}</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="filter_new" name="filter" value="new"/>
+                                    <label htmlFor="filter_new">{Cookies.get('language') === 'lt' ? 'Naujausi' : 'Newest'}</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="filter_old" name="filter" value="old"/>
+                                    <label htmlFor="filter_old">{Cookies.get('language') === 'lt' ? 'Seniausi' : 'Oldest'}</label>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+
+                <nav className="flex justify-center pt-5">
+                    <ul className="pagination justify-content-end flex-wrap mx-3 z-20">
+                        {threads.links.map((link, index) => (
+                            <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
+                                {index === 0 ? '←' : index === threads.links.length - 1 ? '→'
+                                : link.label}
+                            </a></li>
+                        ))}
+                    </ul>
+                </nav> 
+
+            </div>
         }
         {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">{Cookies.get('language') === 'lt' ? (<React.Fragment>O, ne!<br/>Čia nieko nėra :(</React.Fragment>) : <React.Fragment>OOOPS!<br/>Nothing to show here :(</React.Fragment>} </div> :
             <div className="row flex justify-center flex-wrap mx-3">
