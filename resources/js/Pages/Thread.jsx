@@ -65,7 +65,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                                     weekday: 'short',
                                     hour: '2-digit',
                                     minute: '2-digit',
-                                })} [ {thread.user['name']} ]
+                                })} [ <Link href={route('profile.show', thread.user_id)} className="font-extrabold">{thread.user['name']}</Link> ]
                                 {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
                     <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
                     <div className='flex justify-center'>
@@ -163,7 +163,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 weekday: 'short',
                                 hour: '2-digit',
                                 minute: '2-digit',
-                            })} [ {comment.user_name} ] 
+                            })} [ <Link href={route('profile.show', comment.user_id)} className='font-extrabold'>{comment.user_name}</Link> ] 
                             {user.id === comment.user_id ? 
                                 <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span> 
                             : ''}

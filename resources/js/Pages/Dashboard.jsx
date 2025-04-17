@@ -16,39 +16,35 @@ export default function Dashboard({threads, comment_count_object}) {
 
     const { delete:destroy } = useForm({});
 
-    let filterLayer = document.getElementById('filterLayer');
-    let filterWrapper = document.getElementById('filterWrapper');
-
     return (
         <AuthenticatedLayout>
         {threads.data.length === 0 ? '' :
             <div className="flex justify-center flex-col">
 
-                <div className={"flex justify-center mt-1 relative "} id='filterWrapper'>
+                <div className="flex justify-center mt-1 relative">
                     <FilterIcon text={Cookies.get('language') === 'lt' ? 'Filtruoti pagal' : 'Filter by'}/>
 
-                    <div id="filterLayer" className="absolute top-[100%] bg-atomWhite rounded-[15px] z-30 p-2">
-                        <form className="flex row">
+                    <div className="absolute top-[100%] bg-atomWhite rounded-[15px] p-2">
                             <ul className='flex gap-3'>
-                                <li>
+                                <li className="flex items-center">
                                     <input type="radio" id="filter_comment" name="filter" value="comment"/>
-                                    <label htmlFor='filter_comment'>{Cookies.get('language') === 'lt' ? 'Komentarus' : 'Comments'}</label>
+                                    <label htmlFor='filter_comment' className="ms-1">{Cookies.get('language') === 'lt' ? 'Komentarus' : 'Comments'}</label>
                                 </li>
-                                <li>
+                                <li className="flex items-center">
                                     <input type="radio" id="filter_new" name="filter" value="new"/>
-                                    <label htmlFor="filter_new">{Cookies.get('language') === 'lt' ? 'Naujausi' : 'Newest'}</label>
+                                    <label htmlFor="filter_new" className="ms-1">{Cookies.get('language') === 'lt' ? 'Naujausi' : 'Newest'}</label>
                                 </li>
-                                <li>
+                                <li className="flex items-center">
                                     <input type="radio" id="filter_old" name="filter" value="old"/>
-                                    <label htmlFor="filter_old">{Cookies.get('language') === 'lt' ? 'Seniausi' : 'Oldest'}</label>
+                                    <label htmlFor="filter_old" className="ms-1">{Cookies.get('language') === 'lt' ? 'Seniausi' : 'Oldest'}</label>
                                 </li>
                             </ul>
-                        </form>
                     </div>
+
                 </div>
 
                 <nav className="flex justify-center pt-5">
-                    <ul className="pagination justify-content-end flex-wrap mx-3 z-20">
+                    <ul className="pagination justify-content-end flex-wrap mx-3">
                         {threads.links.map((link, index) => (
                             <li className={link.active ? "page-item opacity-80" : "page-item"}><a className="page-link" key={link.label} href={link.url}>
                                 {index === 0 ? '←' : index === threads.links.length - 1 ? '→'
@@ -75,7 +71,7 @@ export default function Dashboard({threads, comment_count_object}) {
                                     hour: '2-digit',
                                     minute: '2-digit',
                                 })} 
-                                <br/>{Cookies.get('language') === 'lt' ? 'sukūrė' : 'by'} {thread.user.name}</p>
+                                <br/>{Cookies.get('language') === 'lt' ? 'sukūrė' : 'by'} <Link href={route('profile.show', thread.user_id)} className="font-extrabold" >{thread.user.name}</Link></p>
                                 <div>
                                     <CommentsCountIcon count={comment_count_object[thread.id] != null ? comment_count_object[thread.id] : 0}/>
                                     <span className='text-metroAlert font-medium'>{comment_count_object[thread.id] >= 200 ? Cookies.get('language') === 'lt' ? "Komentarų limitas pasiektas" : "Comment limit reached" : ""}</span>

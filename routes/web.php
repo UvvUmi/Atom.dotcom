@@ -3,13 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Models\Thread;
-use App\Http\Controllers\ThreadController;
-use PhpParser\Node\Expr\PostInc;
-use App\Http\Controllers\ThreadImgController;
 
 // Route::get('/', function () {
 //     // return Inertia::render('Welcome', [
@@ -34,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/destroy_comment/{comment_id}', [PostController::class, 'destroyComment']);
     Route::delete('/thread/{id}/destroy_thread', [PostController::class, 'destroyThread']);
     Route::delete('/destroy/{id}', [DashboardController::class, 'destroy']);
+
+    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
    
 });
 

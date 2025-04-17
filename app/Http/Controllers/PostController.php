@@ -67,10 +67,14 @@ class PostController extends Controller
         $comment = Comment::findOrFail($comment_id);
 
         if($comment['user_id'] === auth()->id()) {
-            if($comment['img_url'] != null) {
-                unlink(public_path('uploads/comments/'.$comment['img_url']));
+            try {
+                if($comment['img_url'] != null) {
+                    unlink(public_path('uploads/comments/'.$comment['img_url']));
+                }
+                $comment->delete();
+            } catch(Exception $e) {
+                $comment->delete();
             }
-            $comment->delete();
         }
 
         return back();
