@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Thread;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -22,6 +23,8 @@ class ProfileController extends Controller
     {
         return Inertia::render('Profile/Profile', [
             'user' => User::findOrFail($id),
+            'threads' => Thread::select('threads.id', 'threads.title')->where('threads.user_id', $id)->get(),
+            'thread_count' => Thread::where('user_id', $id)->count(),
         ]);
     }
 

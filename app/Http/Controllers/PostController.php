@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Thread;
 use App\Models\User;
+use Exception;
 use App\Models\Comment;
 
 class PostController extends Controller
