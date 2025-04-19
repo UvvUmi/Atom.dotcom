@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Cookies from 'js-cookie';
+import UploadIcon from '../../Components/UploadIcon';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({

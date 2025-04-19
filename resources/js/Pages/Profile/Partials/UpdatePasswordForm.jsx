@@ -3,13 +3,15 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { useRef } from 'react';
 import Cookies from 'js-cookie';
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
+
+    const user = usePage().props.auth.user;
 
     const {
         data,
@@ -48,7 +50,12 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-            <a className="text-metroAlert" href={route('dashboard')}>← {Cookies.get('language') === 'lt' ? 'Atgal' : 'Back'}</a>
+            <div className="flex justify-between">
+                <a className="text-metroAlert" href={route('dashboard')}>← {Cookies.get('language') === 'lt' ? 'Atgal' : 'Back'}</a>
+                <a href={route('profile.show', user.id)}>{Cookies.get('language') === 'lt' ? 'Peržiūrėti viešą profilį' : "View public profile"} →</a>
+            </div>    
+            
+                
                 <h2 className="text-lg mt-3 font-medium text-gray-900">
                     {Cookies.get('language') === 'lt' ? "Atnaujinti slaptažodį" : "Update Password"}
                 </h2>

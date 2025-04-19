@@ -12,7 +12,7 @@ export default function GuestLayout({ children }) {
             <button className='top-0 right-5 fixed'><LanguageMenu/></button>
 
             <div className="flex flex-row justify-center items-center space-x-4">
-                <Atom className='h-[120px] w-[120px]'/>
+                <Atom className='h-[100px] w-[100px]'/>
             </div>
 
             <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">

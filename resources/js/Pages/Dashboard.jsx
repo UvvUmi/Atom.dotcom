@@ -70,8 +70,19 @@ export default function Dashboard({threads, comment_count_object}) {
                                 })}) {new Date(thread.created_at).toLocaleTimeString('lt-LT', {
                                     hour: '2-digit',
                                     minute: '2-digit',
-                                })} 
-                                <br/>{Cookies.get('language') === 'lt' ? 'sukūrė' : 'by'} <Link href={route('profile.show', thread.user_id)} className="font-extrabold" >{thread.user.name}</Link></p>
+                                })}</p>
+                                <div className="flex">
+                                    {Cookies.get('language') === 'lt' ? 'sukūrė' : 'by'} <a title={thread.user.name} href={route('profile.show', thread.user_id)} className="font-extrabold flex ms-1" >{thread.user.name}
+                                        <img className="rounded-[5px] w-[25px] h-[25px] ms-1 border-atomWhite border-1" alt="profile pic"
+                                            src={
+                                                thread.user.avatar_url === null ? '../uploads/avatars/null_avatar.png'
+                                                : thread.user.avatar_url.substring(0,4) === 'http' ? thread.user.avatar_url
+                                                : `../uploads/avatars/${thread.user.avatar_url}`
+                                            }
+                                        />
+                                    </a>
+                                </div>
+
                                 <div>
                                     <CommentsCountIcon count={comment_count_object[thread.id] != null ? comment_count_object[thread.id] : 0}/>
                                     <span className='text-metroAlert font-medium'>{comment_count_object[thread.id] >= 200 ? Cookies.get('language') === 'lt' ? "Komentarų limitas pasiektas" : "Comment limit reached" : ""}</span>

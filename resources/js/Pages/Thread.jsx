@@ -65,7 +65,17 @@ export default function Dashboard({thread, comments, comment_count}) {
                                     weekday: 'short',
                                     hour: '2-digit',
                                     minute: '2-digit',
-                                })} [ <Link href={route('profile.show', thread.user_id)} className="font-extrabold">{thread.user['name']}</Link> ]
+                                })}
+                                <Link href={route('profile.show', thread.user_id)} className="font-extrabold inline-flex ms-1 items-center">
+                                    {thread.user.name}
+                                    <img className="rounded-[5px] w-[20px] h-[20px] ms-1 border-atomWhite border-1"
+                                        alt='threader pic'
+                                        src={ 
+                                            thread.user.avatar_url === null ? '../uploads/avatars/null_avatar.png'
+                                            : thread.user.avatar_url.substring(0,4) === 'http' ? thread.user.avatar_url
+                                            : `../uploads/avatars/${thread.user.avatar_url}`}
+                                    />
+                                </Link>
                                 {user.id === thread.user_id ? <span onClick={() => {destroy(`/thread/${thread.id}/destroy_thread`)}} className='ms-2 text-atomRed cursor-pointer'>[{Cookies.get('language') === 'lt' ? 'Trinti įrašą' : 'Remove thread'}]</span> : ''}</span>
                     <div className=""><button onClick={()=> {window.history.back();}} className="font-[900] text-[2em] sm:ms-3 lg:ms-6 absolute cursor-pointer">←</button></div>
                     <div className='flex justify-center'>
@@ -163,7 +173,16 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 weekday: 'short',
                                 hour: '2-digit',
                                 minute: '2-digit',
-                            })} [ <Link href={route('profile.show', comment.user_id)} className='font-extrabold'>{comment.user_name}</Link> ] 
+                            })} <Link href={route('profile.show', comment.user_id)} className='font-extrabold inline-flex items-center'>
+                                    {comment.user_name}
+                                    <img className="rounded-[15px] w-[18px] h-[18px] ms-1 border-atomWhite border-1"
+                                        alt='commenter pic'
+                                        src={
+                                            comment.avatar_url === null ? '../uploads/avatars/null_avatar.png'
+                                            : comment.avatar_url.substring(0,4) === 'http' ? comment.avatar_url
+                                            : `../uploads/avatars/${comment.avatar_url}`
+                                        }/>
+                                </Link>
                             {user.id === comment.user_id ? 
                                 <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span> 
                             : ''}
