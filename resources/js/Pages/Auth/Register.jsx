@@ -6,6 +6,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import UploadIcon from '../../Components/UploadIcon';
+import { useEffect } from 'react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -103,8 +104,18 @@ export default function Register() {
                     />
                     : null }
                 </div>
+                
+                <div className="mt-2 flex items-center">
+                    <input id="policyBox" type='checkbox' className="rounded-[5px]"/>
+                    <label htmlFor="policyBox" className="ms-1">
+                        {Cookies.get('language') === 'lt' 
+                            ? 'Sutinku su duomenų ir slapukų naudojimo politiką'
+                            : 'I Agree with the use of data and cookies policy'
+                        }
+                    </label>
+                </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-2 flex items-center justify-end">
                     <Link
                         href={route('login')}
                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#334155] focus:ring-offset-2"
@@ -113,7 +124,7 @@ export default function Register() {
                     </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        {Cookies.get('language') === "lt" ? "Registruotis" : "Register"}
+                        {Cookies.get('language') === "lt" ? "Kurti paskyrą" : "Create Account"}
                     </PrimaryButton>
                 </div>
             </form>

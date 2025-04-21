@@ -1,5 +1,8 @@
 -Avatars
 -Update: Avatars, Comments
 -Filter threads: Newest, oldest, by Comment count(use fronted sort and filter)
-=====================================================
-Finish work according to prof. reqs
+-Activate new user via email
+-User personal identification number
+-Search by
+-Add checkbox to register
+-PDF thread
