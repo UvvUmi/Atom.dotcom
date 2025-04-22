@@ -31,7 +31,7 @@ export default function Profile({user, threads, thread_count}) {
                     <hr/>
                     <p><span className="font-extrabold">{Cookies.get('language') === 'lt' ? 'El. paštas' : 'Email'}</span>: {user.email}</p>
                     <hr/>
-                    <p><span className="font-extrabold">{Cookies.get('language') === 'lt' ? 'Vartotojo kūrimo data' : 'User created at'}</span>: {new Date(user.email_verified_at).toLocaleString('lt-LT', {
+                    <p><span className="font-extrabold">{Cookies.get('language') === 'lt' ? 'Vartotojo kūrimo data' : 'User created at'}</span>: {new Date(user.created_at).toLocaleString('lt-LT', {
                         year: 'numeric',
                         month: '2-digit',
                         day: '2-digit',
