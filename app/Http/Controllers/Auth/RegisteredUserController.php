@@ -31,17 +31,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $data['password'] = Hash::make($request->password);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        if ($request['avatar'] != null) {
+            $request->validate([
+                'avatar' => 'mimes:jpeg,jpg,png,gif,webm|max:10240',
+            ]);
+
+            $avatarPathFiltered = auth()->id().time().'.'.$request->avatar->extension();
+            $request->avatar->move(public_path('uploads/avatars'), $avatarPathFiltered );
+
+            $data['avatar_url'] = $avatarPathFiltered;
+
+        }
+
+        $user = User::create($data);
+        
 
         event(new Registered($user));
 
@@ -49,11 +59,11 @@ class RegisteredUserController extends Controller
 
         if(isset($_COOKIE['language']) && $_COOKIE['language'] === 'lt') {
             $content = "Sveiki, {$request->name}\nMalonu Jumis matyti!";
-            $subject = "Atom Registracija sėkminga!";
+            $subject = "Atom Registracija";
         }
         else {
             $content = "Welcome, {$request->name}\nNice to see you!";
-            $subject = "Atom Registration success!";
+            $subject = "Atom Registration";
         }
 
         Mail::raw($content, function($message) use ($request, $subject) {

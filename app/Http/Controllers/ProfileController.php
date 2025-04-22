@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Thread;
 use App\Models\User;
+use Exception;
 
 class ProfileController extends Controller
 {
@@ -65,7 +66,14 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        try {
+            if($user['avatar_url'] != null) {
+                unlink(public_path('uploads/avatars/'.$user['avatar_url']));
+            }
+            $user->delete();
+        } catch(Exception $e) {
+            $user->delete();
+        }
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

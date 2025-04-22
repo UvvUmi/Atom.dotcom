@@ -6,7 +6,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import UploadIcon from '../../Components/UploadIcon';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +14,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        avatar: null,
     });
 
     const submit = (e) => {
@@ -23,6 +24,15 @@ export default function Register() {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
+
+    let avatarUpload = document.getElementById('avatarUpload');
+
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handlePolicyboxChange = (event) => {
+        setIsChecked(event.target.checked);
+    };
+    
 
     return (
         <GuestLayout>
@@ -105,15 +115,45 @@ export default function Register() {
                     : null }
                 </div>
                 
-                <div className="mt-2 flex items-center">
-                    <input id="policyBox" type='checkbox' className="rounded-[5px]"/>
-                    <label htmlFor="policyBox" className="ms-1">
-                        {Cookies.get('language') === 'lt' 
-                            ? 'Sutinku su duomenų ir slapukų naudojimo politiką'
-                            : 'I Agree with the use of data and cookies policy'
-                        }
+                <div className='flex justify-center mt-3 mb-1'>
+                    <label htmlFor='avatarUpload'>
+                        <UploadIcon text={Cookies.get('language') === 'lt' ? 'Profilio nuotrauką' : 'Avatar image'}/>
                     </label>
+                    <input
+                    id='avatarUpload'
+                    className="hidden"
+                    type="file"
+                    name="avatar"
+                    onChange={(e) =>
+                        setData(
+                            "avatar", e.target.files[0],
+                        )
+                    }
+                    />
                 </div>
+                {avatarUpload != null && avatarUpload.value != '' ? <div className='ms-3 text-center'>{avatarUpload.value.replace("C:\\fakepath\\", "")} 
+                        <span className='ms-1 font-extrabold text-metroAlert cursor-pointer' onClick={()=> {
+                            setData('avatar', null);
+                            avatarUpload.value = '';
+                        }}>X</span>
+                    </div>  : ''}
+                <span className='text-xs'>
+                    {Cookies.get('language') === 'lt' ? 'Max dydis: 10 MB | Formatai: jpeg jpg png gif webm | Raiška < 3200x3200' 
+                        : 'Max filesize: 10 MB | File formats: jpeg jpg png gif webm | Resolution < 3200x3200'}
+                </span>
+
+                { document.getElementById('email')?.value != '' 
+                    && document.getElementById('password_confirmation')?.value != '' ?
+                    <div className="mt-2 flex items-center">
+                        <input id="policyBox" type='checkbox' checked={isChecked} onChange={handlePolicyboxChange} className="rounded-[5px]"/>
+                        <label htmlFor="policyBox" className="ms-1">
+                            {Cookies.get('language') === 'lt' 
+                                ? 'Sutinku su duomenų ir slapukų naudojimo politiką'
+                                : 'I Agree with the use of data and cookies policy'
+                            }
+                        </label>
+                    </div> : ''
+                }
 
                 <div className="mt-2 flex items-center justify-end">
                     <Link
@@ -123,9 +163,12 @@ export default function Register() {
                         {Cookies.get('language') === "lt" ? "Turite paskyrą?" : "Already registered?"}
                     </Link>
 
+                { isChecked ?
                     <PrimaryButton className="ms-4" disabled={processing}>
                         {Cookies.get('language') === "lt" ? "Kurti paskyrą" : "Create Account"}
                     </PrimaryButton>
+                    : ''
+                }
                 </div>
             </form>
         </GuestLayout>
