@@ -1,4 +1,4 @@
--Update: Avatars, Comments
+-Update: Comments
 -Filter threads: Newest, oldest, by Comment count(use fronted sort and filter)
 -Activate new user via email
 -User personal identification number

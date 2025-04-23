@@ -49,14 +49,12 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     return (
         <section className={className}>
-            <header>
             <div className="flex justify-between">
                 <a className="text-metroAlert" href={route('dashboard')}>← {Cookies.get('language') === 'lt' ? 'Atgal' : 'Back'}</a>
                 <a href={route('profile.show', user.id)}>{Cookies.get('language') === 'lt' ? 'Peržiūrėti viešą profilį' : "View public profile"} →</a>
-            </div>    
-            
-                
-                <h2 className="text-lg mt-3 font-medium text-gray-900">
+            </div>
+            <header>    
+                <h2 className="text-lg mt-2 font-medium text-gray-900">
                     {Cookies.get('language') === 'lt' ? "Atnaujinti slaptažodį" : "Update Password"}
                 </h2>
 

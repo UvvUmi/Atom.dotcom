@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import UpdateAvatarForm from './Partials/UpdateAvatarForm';
 import Cookies from 'js-cookie';
 
 export default function Edit({ mustVerifyEmail, status }) {

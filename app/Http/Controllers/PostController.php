@@ -34,7 +34,7 @@ class PostController extends Controller
 
         if ($request['commentFile'] != null && $request['commentFilename'] != null) {
             $request->validate([
-                'commentFile' => 'mimes:jpeg,jpg,png,gif,webm|max:10240',
+                'commentFile' => 'mimes:jpeg,jpg,png,gif|max:10240',
             ]);
 
             $fileURLfiltered = auth()->id().time().'.'.$request->commentFile->extension();
