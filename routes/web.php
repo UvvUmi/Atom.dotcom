@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/destroy/{id}', [DashboardController::class, 'destroy']);
 
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+
+    Route::post('/avatar/post', [ProfileController::class, 'postAvatar'])->name('avatar.post');
    
 });
 

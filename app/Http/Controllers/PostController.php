@@ -54,7 +54,6 @@ class PostController extends Controller
     {
         $thread = Thread::findOrFail($id);
 
-
         if($thread['user_id'] === auth()->id()) {
             unlink(public_path('uploads/'.$thread['img_url']));
             $thread->delete();

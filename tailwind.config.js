@@ -25,10 +25,11 @@ export default {
             atom: '#1F2937',
             atomTransparent: 'rgba(31, 41, 55, 0.3)',
             overlay:"rgba(0, 0, 0, 0.3)",
-            atomRed: '#950606',
+            atomRed: '#F87171',
             inner_layer: 'rgba(0, 0, 0, 0.45)',
             atomWhite: '#FFF',
             mintTransparent: 'rgba(152, 255, 152, 0.3)',
+            atomBlue: "#60A5FA",
         },
     },
 

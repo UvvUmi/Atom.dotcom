@@ -16,6 +16,7 @@ export default function Dashboard({threads, comment_count_object}) {
 
     const { delete:destroy } = useForm({});
 
+
     return (
         <AuthenticatedLayout>
         {threads.data.length === 0 ? '' :

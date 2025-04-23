@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('comment');
+            $table->text('comment');
             $table->string('img_url')->nullable();
             $table->string('img_name')->nullable();
             $table->foreignId('thread_id')->constrained('threads')->onDelete('cascade');

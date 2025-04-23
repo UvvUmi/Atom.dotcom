@@ -117,7 +117,7 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 className="md:ms-2 mt-2 md:w-[450px]"
                                 placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
                                 onChange={(e) => setData('comment', e.target.value)}
-                                maxLength='256'
+                                maxLength='255'
                                 isFocused={true}
                             />
                             { data.comment != '' ?
@@ -183,22 +183,28 @@ export default function Dashboard({thread, comments, comment_count}) {
                                             : `../uploads/avatars/${comment.avatar_url}`
                                         }/>
                                 </Link>
-                            {user.id === comment.user_id ? 
-                                <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span> 
+                            {user.id === comment.user_id ?
+                                <span>
+                                    <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span>
+                                    <span onClick={() => {
+                                        alert(comment.id);
+                                    }} className="text-atomBlue cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Keisti' : 'Edit'}]</span> 
+                                </span>
                             : ''}
                             
                         </div>
+
                         <a href={`/uploads/comments/${comment.img_url}`} download={comment.user_id + "_" + comment.img_name} className='underline ms-1'>
                             {comment.img_name}
                         </a>
                             {comment.img_url != null ?
-                            <div className="flex col">
-                                <a href={`/uploads/comments/${comment.img_url}`} target='_blank'>
+                            <div className='overflow-hidden'>
+                                <a href={`/uploads/comments/${comment.img_url}`} target='_blank' className='float-left me-3'>
                                     <img src={`/uploads/comments/${comment.img_url}`} alt={comment.img_name} className='w-[250px] shadow-lg mt-1 mb-3 rounded-[15px]'/>
                                 </a>
-                                <span className='m-2'>{comment.comment}</span>
+                                <span className='block my-2 flow-text break-words'>{comment.comment}</span>
                             </div>
-                            : <span>{comment.comment}</span>}
+                            : <span className='flow-text break-words'>{comment.comment}</span>}
                     </div>
                 ))
                     : <div className='ms-3 text-white font-black bg-micronesia w-[50%] mt-3 indent-3 rounded-[15px] p-2'>{Cookies.get('language') === 'lt' ? 'Komentarų nėra' : 'No comments here yet'}</div>

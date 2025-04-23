@@ -80,4 +80,31 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function postAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|mimes:jpeg,jpg,png,gif|max:10240',
+        ]);
+
+        if ($request->user()->avatar_url != null) {
+            try {
+                unlink(public_path("uploads/avatars/{$request->user()->avatar_url}"));
+            }
+            catch(Exception) {
+                dd("ERROR::while unlinking avatar");
+            }
+        }
+
+        $fileURLfiltered = auth()->id().time().'.'.$request->avatar->extension();
+        $request->avatar->move(public_path('uploads/avatars'), $fileURLfiltered);
+
+        User::findOrFail(auth()->id())->update([
+            'avatar_url' => $fileURLfiltered,
+        ]);
+
+        return Redirect::route('profile.show', auth()->id());
+    }
+
 }
