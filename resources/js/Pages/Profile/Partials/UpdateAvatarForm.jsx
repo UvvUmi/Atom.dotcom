@@ -34,7 +34,7 @@ export default function UpdateAvatarForm() {
 
             <header>    
                 <h2 className="text-lg mt-3 font-medium text-gray-900">
-                    {Cookies.get('language') === 'lt' ? "Atnaujinti profilio nuotrauką" : "Update profile picture"}
+                    {Cookies.get('language') === 'lt' ? "Keisti profilio nuotrauką" : "Change profile picture"}
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">

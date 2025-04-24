@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('comment');
             $table->string('img_url')->nullable();
             $table->string('img_name')->nullable();
+            $table->boolean('was_edited')->default(false);
             $table->foreignId('thread_id')->constrained('threads')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

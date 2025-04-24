@@ -3,7 +3,6 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import TextInput from '../Components/TextInput';
-import PrimaryButton from '../Components/PrimaryButton';
 import SendButton from '../../../public/sendBtn.svg';
 import CommentsCountIcon from '../Components/CommentsCount';
 import ArrowUp from '../Components/ArrowUp';
@@ -20,10 +19,11 @@ export default function Dashboard({thread, comments, comment_count}) {
         '3': 'bg-gradient-to-tr from-[#00204a] via-[#005792] to-[#00bbf0]',
     };
 
-    const { data, setData, post, processing, reset, delete:destroy } = useForm({
+    const { data, setData, post, patch, processing, reset, delete:destroy } = useForm({
         comment: '',
         commentFile: null,
         commentFilename: '',
+        editedComment: '',
 
     });
 
@@ -118,23 +118,18 @@ export default function Dashboard({thread, comments, comment_count}) {
                                 placeholder={Cookies.get('language') === 'lt' ? 'Palikti komentarą' : 'Leave comment'}
                                 onChange={(e) => setData('comment', e.target.value)}
                                 maxLength='255'
-                                isFocused={true}
-                            />
+                                isFocused={true}/>
                             { data.comment != '' ?
                                 <div className='flex items-center ms-1'>
                                     <label htmlFor="commentImgUpload">
                                         <UploadIcon text=''/>
                                     </label>
                                     <input
-                                    id='commentImgUpload'
-                                    className="hidden"
-                                    type="file"
-                                    name="commentFile"
-                                    onChange={(e) =>
-                                        setData(
-                                            "commentFile", e.target.files[0],
-                                        )
-                                    }
+                                        id='commentImgUpload'
+                                        className="hidden"
+                                        type="file"
+                                        name="commentFile"
+                                        onChange={(e) =>setData("commentFile", e.target.files[0],)}
                                     />
                                     <button onClick={()=>{setData('commentFilename', commentImgName.value.replace("C:\\fakepath\\", ""))}} title="Send ME!!!" disabled={processing} type='submit' value='Submit' className="bg-transparent border-0 w-[45px] hover:scale-[120%]" style={{transition: 'transform 1s ease'}}>
                                         <img src={SendButton} className="mt-2" alt="send me!"/>
@@ -184,16 +179,13 @@ export default function Dashboard({thread, comments, comment_count}) {
                                         }/>
                                 </Link>
                             {user.id === comment.user_id ?
-                                <span>
-                                    <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} className="text-atomRed cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]</span>
-                                    <span onClick={() => {
-                                        alert(comment.id);
-                                    }} className="text-atomBlue cursor-pointer font-semibold ms-2">[{Cookies.get('language') === 'lt' ? 'Keisti' : 'Edit'}]</span> 
+                                <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} 
+                                    className="text-atomRed cursor-pointer font-semibold ms-2">
+                                        [{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]
                                 </span>
                             : ''}
-                            
                         </div>
-
+                        
                         <a href={`/uploads/comments/${comment.img_url}`} download={comment.user_id + "_" + comment.img_name} className='underline ms-1'>
                             {comment.img_name}
                         </a>

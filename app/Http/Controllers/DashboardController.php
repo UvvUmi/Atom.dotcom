@@ -13,7 +13,6 @@ class DashboardController extends Controller
     
     public function index()
     {
-
         return Inertia::render('Dashboard', [
             'threads' => Thread::with('user')->orderBy('created_at', 'desc')->paginate(9),
             'comment_count_object' => Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
