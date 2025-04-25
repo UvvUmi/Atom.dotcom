@@ -30,6 +30,7 @@ export default {
             atomWhite: '#FFF',
             mintTransparent: 'rgba(152, 255, 152, 0.3)',
             atomBlue: "#60A5FA",
+            atomYellow: '#FBBF24',
         },
     },
 

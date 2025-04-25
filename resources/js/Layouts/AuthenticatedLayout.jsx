@@ -54,11 +54,13 @@ export default function AuthenticatedLayout({ header, children }) {
         
     };
 
+
+
     let imgUpload = document.getElementById('threadImgUpload');
 
     return (
 
-        <div className="min-h-screen bg-gradient-to-t from-[#0f172a]  to-[#334155]">
+        <div className="min-h-screen bg-gradient-to-t from-[#0f172a] to-[#334155]">
             <div id="overlay" className="hidden">
             <div className='flex items-center'>  
                     <form className='bg-white p-3 rounded-[25px]' onSubmit={submit}>
@@ -124,7 +126,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 </div>  
             </div>
 
-            <nav className="dark:bg-gradient-to-br from-[#0f172a]  to-[#334155] sticky top-0 z-40 border-b-2 border-groove border-white">
+            <nav className="dark:bg-gradient-to-br from-[#0f172a] to-[#334155] sticky z-40 top-0 border-b-2 border-groove border-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 justify-between">
 
@@ -175,11 +177,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                         >
                                             {Cookies.get("language") === "lt" ? "Paskyra" : "Profile"}
                                         </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            {Cookies.get("language") === "lt" ? "Kurti įrašą" : "Create thread"}
-                                        </Dropdown.Link>
+                                        <span
+                                            className='cursor-pointer block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ' 
+                                            onClick={() => {
+                                                document.getElementById('overlay').className='fixed justify-center align-middle w-[100%] h-[100%] bg-overlay z-50 flex';
+                                            }}>{Cookies.get("language") === "lt" ? "Kurti įrašą" : "Create thread"}  
+                                        </span>
                                         <Dropdown.Link
                                             href={route('dashboard')}
                                         >{Cookies.get("language") === "lt" ? "Pagrindinis" : "Homepage"}
@@ -290,7 +293,23 @@ export default function AuthenticatedLayout({ header, children }) {
 
                 </div>
             </nav>
-            
+            {user.email_verified_at === null 
+                ?
+                <div className="z-30 w-[100%] bg-atomYellow font-bold text-center border-2 sticky top-[82px] fixed border-atom border-dashed rounded-[5px]">
+                    
+                        {Cookies.get('language') === 'lt' ?
+                            <span>Patvirtinkite el. paštą!
+                                [<span className="text-atomRed cursor-pointer hover:underline"
+                                    onClick={()=> {post(route('verification.send'))}}>negavote laiško?</span>]
+                            </span>
+                            
+                            : <span>Confirm Your email address!
+                                [<span className="text-atomRed cursor-pointer hover:underline" 
+                                    onClick={()=> {post(route('verification.send'))}}> resend </span>]
+                            </span>}
+                    
+                </div>
+                : ''}
             <main>{children}</main>
         </div>
     );

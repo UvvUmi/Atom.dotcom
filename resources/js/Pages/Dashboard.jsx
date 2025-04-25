@@ -20,10 +20,10 @@ export default function Dashboard({threads, comment_count_object}) {
     return (
         <AuthenticatedLayout>
         {threads.data.length === 0 ? '' :
-            <div className="flex justify-center flex-col">
+            <div className="flex justify-center flex-col z-20">
 
                 <div className="flex justify-center mt-1 relative">
-                    {/* <FilterIcon text={Cookies.get('language') === 'lt' ? 'Filtruoti pagal' : 'Filter by'}/>
+                    <FilterIcon text={Cookies.get('language') === 'lt' ? 'Filtruoti pagal' : 'Filter by'}/>
 
                     <div className="absolute top-[100%] bg-atomWhite rounded-[15px] p-2">
                             <ul className='flex gap-3'>
@@ -40,7 +40,7 @@ export default function Dashboard({threads, comment_count_object}) {
                                     <label htmlFor="filter_old" className="ms-1">{Cookies.get('language') === 'lt' ? 'Seniausi' : 'Oldest'}</label>
                                 </li>
                             </ul>
-                    </div> */}
+                    </div>
 
                 </div>
 

@@ -1,5 +1,3 @@
--Verify email( notify, resend)
 -Generate PDF of Profile
--Search by
 -Edit comments
--Filters
+-Filters XOR Search By
