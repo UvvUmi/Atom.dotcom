@@ -60,7 +60,7 @@ export default function Dashboard({threads, comment_count_object}) {
         {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">{Cookies.get('language') === 'lt' ? (<React.Fragment>O, ne!<br/>Čia nieko nėra :(</React.Fragment>) : <React.Fragment>OOOPS!<br/>Nothing to show here :(</React.Fragment>} </div> :
             <div className="row flex justify-center flex-wrap mx-3">
                 {threads.data.map(thread => (
-                        <div key={thread.id} className="card w-[20rem] h-auto overflow-hidden m-[30px] text-white p-0 border-0 border-transparent bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-[#f33535] via-[#d8e9f0] to-[#33425b]" key={thread.id}>
+                        <div key={thread.id} className="card w-[20rem] h-auto overflow-hidden m-[30px] text-white p-0 border-0 border-transparent bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-[#f33535] via-[#d8e9f0] to-[#33425b]">
                             <img className="card-img-top w-[100%] h-[350px] p-2 rounded-[15px]" src={thread.img_url.substring(0, 4) === 'http' ? thread.img_url : `/uploads/${thread.img_url}` } alt="Card image cap"/>
                             <div className="card-body">
                                 <h5 className="card-title font-black text-center">{thread.title}</h5>
