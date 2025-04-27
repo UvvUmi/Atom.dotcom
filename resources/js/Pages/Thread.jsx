@@ -7,6 +7,7 @@ import SendButton from '../../../public/sendBtn.svg';
 import CommentsCountIcon from '../Components/CommentsCount';
 import ArrowUp from '../Components/ArrowUp';
 import UploadIcon from '../Components/UploadIcon';
+import CloseOverlayButton from '../Components/CloseOverlayButton';
 
 export default function Dashboard({thread, comments, comment_count}) {
     console.log(comments);
@@ -34,8 +35,11 @@ export default function Dashboard({thread, comments, comment_count}) {
 
         post(`/thread/${thread.id}/post_comment`, {
             onFinish: () => {
-                reset('comment', 'commentFilename');
+                reset('comment');
                 e.target.reset();
+                if(data.commentFile != null) {
+                    location.reload();
+                }
             },
         });
     };
@@ -49,12 +53,62 @@ export default function Dashboard({thread, comments, comment_count}) {
                 }
             };
 
+            document.getElementById('closeEditOverlay')?.addEventListener('click', ()=> {
+                document.getElementById('editOverlay').className = 'hidden';
+            });
     }, [])
 
     let commentImgName = document.getElementById('commentImgUpload');
 
+    const [commentValue, setCommentValue] = useState(null);
+
+    const [commentID, setCommentID] = useState(null);
+
+    const patchComment = (e) => {
+        e.preventDefault();
+
+        patch(route('comment.update', commentID)), {
+            onFinish: () => {
+                setCommentID(null);
+                setCommentValue(null);
+            }
+        };
+    }
+
     return (
         <AuthenticatedLayout>
+
+        <div className="hidden" id="editOverlay">
+            <div className="flex items-center">
+                <form className='bg-white p-3 rounded-[15px] border-2 border-atom' onSubmit={patchComment}>
+                    <div className='flex justify-center' id='closeEditOverlay'>
+                        <CloseOverlayButton/>
+                    </div>
+                    <div>
+                    <TextInput
+                        id='editComment'
+                        name='editComment'
+                        value={commentValue}
+                        className="block md:w-[450px] my-2"
+                        isFocused={true}
+                        onChange={(e) => {
+                            setCommentValue(e.target.value);
+                            setData('editedComment', e.target.value);
+                        }}
+                        maxLength='40'/>
+                    </div>
+                    <div className="flex justify-center hover:underline">
+                        <button type="submit" className='text-center' onClick={()=> {
+                            document.getElementById('editOverlay').className = 'hidden';
+                        }}>
+                            {Cookies.get('language') === 'lt' ? 
+                                "Keisti" : "Edit"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div className={bgObject[thread.themeId].concat(" ", "flex justify-center")}>
             <div className="w-[100%] h-[100%] pb-[14%]">
                 <div className="flex justify-center flex-col text-white font-medium">
@@ -179,10 +233,20 @@ export default function Dashboard({thread, comments, comment_count}) {
                                         }/>
                                 </Link>
                             {user.id === comment.user_id ?
+                            <span>
                                 <span onClick={() => {destroy(`/destroy_comment/${comment.id}`)}} 
                                     className="text-atomRed cursor-pointer font-semibold ms-2">
                                         [{Cookies.get('language') === 'lt' ? 'Trinti' : 'Remove'}]
                                 </span>
+                                <span onClick={() => {
+                                    setCommentValue(comment.comment);
+                                    setCommentID(comment.id);
+                                    document.getElementById('editOverlay').className = 'fixed justify-center align-middle z-30 flex w-[100%] h-[50%]';
+                                }} 
+                                    className="text-atomBlue cursor-pointer font-semibold ms-2">
+                                        [{Cookies.get('language') === 'lt' ? 'Keisti' : 'Edit'}]
+                                </span>
+                            </span>
                             : ''}
                         </div>
                         

@@ -13,6 +13,7 @@ use Inertia\Response;
 use App\Models\Thread;
 use App\Models\User;
 use Exception;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class ProfileController extends Controller
 {
@@ -93,7 +94,7 @@ class ProfileController extends Controller
                 unlink(public_path("uploads/avatars/{$request->user()->avatar_url}"));
             }
             catch(Exception) {
-                dd("ERROR::while unlinking avatar");
+                echo 'avatar not found';
             }
         }
 

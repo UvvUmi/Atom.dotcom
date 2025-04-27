@@ -50,6 +50,17 @@ class PostController extends Controller
 
     }
 
+    public function updateComment(Request $request, string $comment_id)
+    {
+        $request->validate([
+            'editedComment' => 'required|string|max:256|min:1',
+        ]);
+
+        Comment::findOrFail($comment_id)->update(['comment' => $request['editedComment']]);
+        
+        return back();
+    }
+
     public function destroyThread($id)
     {
         $thread = Thread::findOrFail($id);
