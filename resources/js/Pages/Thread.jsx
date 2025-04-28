@@ -8,6 +8,7 @@ import CommentsCountIcon from '../Components/CommentsCount';
 import ArrowUp from '../Components/ArrowUp';
 import UploadIcon from '../Components/UploadIcon';
 import CloseOverlayButton from '../Components/CloseOverlayButton';
+import PdfIcon from '../Components/PdfIcon';
 
 export default function Dashboard({thread, comments, comment_count}) {
     console.log(comments);
@@ -56,6 +57,7 @@ export default function Dashboard({thread, comments, comment_count}) {
             document.getElementById('closeEditOverlay')?.addEventListener('click', ()=> {
                 document.getElementById('editOverlay').className = 'hidden';
             });
+
     }, [])
 
     let commentImgName = document.getElementById('commentImgUpload');
@@ -63,6 +65,8 @@ export default function Dashboard({thread, comments, comment_count}) {
     const [commentValue, setCommentValue] = useState(null);
 
     const [commentID, setCommentID] = useState(null);
+
+    const [lang, setLang] = useState(Cookies.get('language'));
 
     const patchComment = (e) => {
         e.preventDefault();
@@ -190,13 +194,16 @@ export default function Dashboard({thread, comments, comment_count}) {
                                     </button>
                                 </div>
                                 : ''}
-                            <div className='md:ms-1 flex gap-2'>
+                            <div className='md:ms-1 flex gap-2 items-center'>
                                 <CommentsCountIcon
                                         count={comment_count}
                                 />
                                 <span onClick={()=> {
                                     window.scrollTo(0, document.body.scrollHeight);
-                                }} className="text-atomWhite font-medium underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
+                                }} className="text-atomWhite font-medium hover:underline cursor-pointer">{Cookies.get('language') === 'lt' ? 'Į Apačią' : 'To Bottom'}</span>
+                                <a href={`/thread/${thread.id}/pdf/${lang}`} className="hover:opacity-80" target="_blank" title={Cookies.get('language') === 'lt' ? "Generuoti įrašo PDF" : "Generate thread PDF"}>
+                                    <PdfIcon/>
+                                </a>
                             </div>
                     </form>
                     {commentImgName != null && commentImgName.value != '' 

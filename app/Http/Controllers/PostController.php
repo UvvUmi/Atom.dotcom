@@ -8,6 +8,7 @@ use App\Models\Thread;
 use App\Models\User;
 use Exception;
 use App\Models\Comment;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PostController extends Controller
 {
@@ -90,5 +91,36 @@ class PostController extends Controller
 
         return back();
     }
+
+    public function generatePDF(string $id, string $lang)
+    {
+        
+        $data = [
+            'thread' => Thread::with(['user:id,name,avatar_url'])->findOrFail($id),
+
+            'comments' => Comment::join('users', 'comments.user_id', '=', 'users.id')
+                ->where('comments.thread_id', $id)->orderBy('created_at', 'desc')
+                ->get(['comments.*', 'users.name as user_name', 'users.avatar_url as avatar_link']),
+
+            'comment_count' => Thread::join('comments', 'threads.id', '=', 'comments.thread_id')
+            ->where('comments.deleted_at', null)->where('threads.id', $id)->count('*'),
+
+            'language' => $lang,
+        ];
+
+        if(substr($data['thread']->img_url, 0,4) === 'http') {
+            $data['thread']->is_local = false;
+        } else {
+            $data['thread']->is_local = true;
+        }
+        // Check if thread image is local
+        
+        $pdf = Pdf::loadView('pdf.thread', $data);
+
+        $filename = preg_replace('/\s+/', '_', $data['thread']->title.'.pdf');
+
+        return $pdf->stream($filename);
+    }
+
 
 }

@@ -30,9 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/thread/{id}/destroy_thread', [PostController::class, 'destroyThread']);
     Route::delete('/destroy/{id}', [DashboardController::class, 'destroy']);
 
+    Route::get('/thread/{id}/pdf/{lang}', [PostController::class, 'generatePDF']);
+
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
     Route::post('/avatar/post', [ProfileController::class, 'postAvatar'])->name('avatar.post');
+
    
 });
 
