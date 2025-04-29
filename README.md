@@ -1,2 +1,1 @@
--Generate PDF of Profile
 -Filters XOR Search By
