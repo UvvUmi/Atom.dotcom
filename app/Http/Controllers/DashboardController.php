@@ -13,12 +13,16 @@ class DashboardController extends Controller
     
     public function index()
     {
-        return Inertia::render('Dashboard', [
-            'threads' => Thread::with('user')->orderBy('created_at', 'desc')->paginate(9),
-            'comment_count_object' => Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
+        if(isset($_COOKIE['filter']) && $_COOKIE['filter'] === 'old') {
+            $orderFilter = 'asc';
+        } else { $orderFilter = 'desc'; } 
+        $threads['threads'] = Thread::with('user')->orderBy('created_at', $orderFilter)->paginate(9);
+        $threads['comment_count_object'] = 
+             Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
             ->where('comments.deleted_at', null)->select('comments.thread_id', Comment::raw('COUNT(*) as CommentCount'))
-            ->groupBy('comments.thread_id')->pluck('CommentCount', 'thread_id'),
-        ]);
+            ->groupBy('comments.thread_id')->pluck('CommentCount', 'thread_id');
+        
+        return Inertia::render('Dashboard', $threads);
     }
     
 

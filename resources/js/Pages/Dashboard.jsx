@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import CommentsCountIcon from '../Components/CommentsCount';
-import FilterIcon from '../Components/FilterIcon';
+import DashboardFilter from '../Components/DashboardFilter';
 
 export default function Dashboard({threads, comment_count_object}) {
     const user = usePage().props.auth.user;
@@ -21,29 +21,7 @@ export default function Dashboard({threads, comment_count_object}) {
         <AuthenticatedLayout>
         {threads.data.length === 0 ? '' :
             <div className="flex justify-center flex-col z-20">
-
-                <div className="flex justify-center mt-1 relative">
-                    <FilterIcon text={Cookies.get('language') === 'lt' ? 'Filtruoti pagal' : 'Filter by'}/>
-
-                    <div className="absolute top-[100%] bg-atomWhite rounded-[15px] p-2">
-                            <ul className='flex gap-3'>
-                                <li className="flex items-center">
-                                    <input type="radio" id="filter_comment" name="filter" value="comment"/>
-                                    <label htmlFor='filter_comment' className="ms-1">{Cookies.get('language') === 'lt' ? 'Komentarus' : 'Comments'}</label>
-                                </li>
-                                <li className="flex items-center">
-                                    <input type="radio" id="filter_new" name="filter" value="new"/>
-                                    <label htmlFor="filter_new" className="ms-1">{Cookies.get('language') === 'lt' ? 'Naujausi' : 'Newest'}</label>
-                                </li>
-                                <li className="flex items-center">
-                                    <input type="radio" id="filter_old" name="filter" value="old"/>
-                                    <label htmlFor="filter_old" className="ms-1">{Cookies.get('language') === 'lt' ? 'Seniausi' : 'Oldest'}</label>
-                                </li>
-                            </ul>
-                    </div>
-
-                </div>
-
+                <DashboardFilter/>
                 <nav className="flex justify-center pt-5">
                     <ul className="pagination justify-content-end flex-wrap mx-3">
                         {threads.links.map((link, index) => (
@@ -54,7 +32,6 @@ export default function Dashboard({threads, comment_count_object}) {
                         ))}
                     </ul>
                 </nav> 
-
             </div>
         }
         {threads.data.length === 0 ?  <div className="text-white font-bold text-center text-[3rem] italic">{Cookies.get('language') === 'lt' ? (<React.Fragment>O, ne!<br/>Čia nieko nėra :(</React.Fragment>) : <React.Fragment>OOOPS!<br/>Nothing to show here :(</React.Fragment>} </div> :
