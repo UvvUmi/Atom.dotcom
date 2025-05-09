@@ -14,9 +14,14 @@ class DashboardController extends Controller
     public function index()
     {
         if(isset($_COOKIE['filter']) && $_COOKIE['filter'] === 'old') {
-            $orderFilter = 'asc';
-        } else { $orderFilter = 'desc'; } 
-        $threads['threads'] = Thread::with('user')->orderBy('created_at', $orderFilter)->paginate(9);
+            $threads['threads'] = Thread::with('user')->orderBy('created_at', 'asc')->paginate(9);
+        } 
+        else if(isset($_COOKIE['filter']) && $_COOKIE['filter'] === 'comment') {
+            $threads['threads'] = Thread::with('user')->orderBy('created_at', 'desc')->paginate(9);
+        } //Čia turėtų būti postų filtravimo pagal komentarų kiekį kodas(jo nėra) 
+        else {
+            $threads['threads'] = Thread::with('user')->orderBy('created_at', 'desc')->paginate(9);
+        } 
         $threads['comment_count_object'] = 
              Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
             ->where('comments.deleted_at', null)->select('comments.thread_id', Comment::raw('COUNT(*) as CommentCount'))

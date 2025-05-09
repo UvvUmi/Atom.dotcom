@@ -148,7 +148,7 @@ export default function Register() {
                         <input id="policyBox" type='checkbox' checked={isChecked} onChange={handlePolicyboxChange} className="rounded-[5px]"/>
                         <label htmlFor="policyBox" className="ms-1">
                             {Cookies.get('language') === 'lt' 
-                                ? 'Sutinku su duomenų ir slapukų naudojimo politiką'
+                                ? 'Sutinku su duomenų ir slapukų naudojimo politika'
                                 : 'I Agree with the use of data and cookies policy'
                             }
                         </label>
