@@ -17,8 +17,8 @@ class DashboardController extends Controller
             $threads['threads'] = Thread::with('user')->orderBy('created_at', 'asc')->paginate(9);
         } 
         else if(isset($_COOKIE['filter']) && $_COOKIE['filter'] === 'comment') {
-            $threads['threads'] = Thread::with('user')->orderBy('created_at', 'desc')->paginate(9);
-        } //Čia turėtų būti postų filtravimo pagal komentarų kiekį kodas(jo nėra) 
+            $threads['threads'] = Thread::with('user')->withCount('comments')->orderBy('comments_count', 'desc')->paginate(9);
+        }
         else {
             $threads['threads'] = Thread::with('user')->orderBy('created_at', 'desc')->paginate(9);
         } 
