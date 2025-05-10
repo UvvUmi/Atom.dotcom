@@ -22,6 +22,7 @@ class DashboardController extends Controller
         else {
             $threads['threads'] = Thread::with('user')->orderBy('created_at', 'desc')->paginate(9);
         } 
+        
         $threads['comment_count_object'] = 
              Comment::join('threads', 'comments.thread_id', '=', 'threads.id')
             ->where('comments.deleted_at', null)->select('comments.thread_id', Comment::raw('COUNT(*) as CommentCount'))

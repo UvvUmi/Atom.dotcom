@@ -21,11 +21,11 @@ class VerifyEmailController extends Controller
 
         if ($request->user()->markEmailAsVerified()) {
             if(isset($_COOKIE['language']) && $_COOKIE['language'] === 'lt') {
-                $content = "Sveiki, {$request->user()->name}\nMalonu Jumis matyti!";
+                $content = "Sveiki, {$request->user()->name}\nMalonu Jumis matyti!\nDabar galite kurti savo įrašus!";
                 $subject = "Atom Registracija";
             }
             else {
-                $content = "Welcome, {$request->user()->name}\nNice to see you!";
+                $content = "Welcome, {$request->user()->name}\nNice to see you!\nNow you can create your own threads!";
                 $subject = "Atom Registration";
             }
     
