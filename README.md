@@ -4,4 +4,4 @@
 <br>
 Works in <i>Chrome</i> and <i>Firefox</i>
 <br>
-User state should be set via database or sessions(use cookies discreetly)  
+User state should be set via database or sessions(<i>use cookies discreetly</i>)  
