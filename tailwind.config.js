@@ -31,6 +31,8 @@ export default {
             mintTransparent: 'rgba(152, 255, 152, 0.3)',
             atomBlue: "#60A5FA",
             atomYellow: '#FBBF24',
+            dotnetTransparent: '#111C',
+            black: 'rgb(0, 0, 0, 0.6)',
         },
     },
 

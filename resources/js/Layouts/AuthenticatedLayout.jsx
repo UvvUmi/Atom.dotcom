@@ -14,6 +14,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { transform } from 'motion';
 import UploadIcon from '../Components/UploadIcon';
 import CloseOverlayButton from '../Components/CloseOverlayButton';
+import SideBar from '../Components/SideBar';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -62,6 +63,7 @@ export default function AuthenticatedLayout({ header, children }) {
     return (
 
         <div className="min-h-screen bg-gradient-to-t from-[#0f172a] to-[#334155]">
+            <SideBar/>
             <div id="overlay" className="hidden">
             <div className='flex items-center'>
                     <form className='bg-white p-3 rounded-[25px]' onSubmit={submit}>
